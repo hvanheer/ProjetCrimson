@@ -14,6 +14,12 @@
 		6F385DD22BAF15CA00FDACE9 /* crimsonInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F385DD12BAF15CA00FDACE9 /* crimsonInterfaceTests.swift */; };
 		6F385DDC2BAF15CA00FDACE9 /* crimsonInterfaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F385DDB2BAF15CA00FDACE9 /* crimsonInterfaceUITests.swift */; };
 		6F385DDE2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F385DDD2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift */; };
+		6F3B31FF2BAF20B600315971 /* Phosphate.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 6F3B31FE2BAF20B600315971 /* Phosphate.ttc */; };
+		6F3B32002BAF20B600315971 /* Phosphate.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 6F3B31FE2BAF20B600315971 /* Phosphate.ttc */; };
+		6F3B32012BAF20B600315971 /* Phosphate.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 6F3B31FE2BAF20B600315971 /* Phosphate.ttc */; };
+		6FC5652F2BAF2AB300452569 /* spotifylogo in Resources */ = {isa = PBXBuildFile; fileRef = 6FC5652E2BAF2AB300452569 /* spotifylogo */; };
+		6FC565302BAF2AB300452569 /* spotifylogo in Resources */ = {isa = PBXBuildFile; fileRef = 6FC5652E2BAF2AB300452569 /* spotifylogo */; };
+		6FC565312BAF2AB300452569 /* spotifylogo in Resources */ = {isa = PBXBuildFile; fileRef = 6FC5652E2BAF2AB300452569 /* spotifylogo */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,8 @@
 		6F385DD72BAF15CA00FDACE9 /* crimsonInterfaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = crimsonInterfaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F385DDB2BAF15CA00FDACE9 /* crimsonInterfaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crimsonInterfaceUITests.swift; sourceTree = "<group>"; };
 		6F385DDD2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crimsonInterfaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6F3B31FD2BAF20B600315971 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/Phosphate.ttc; sourceTree = "<group>"; };
+		6FC5652E2BAF2AB300452569 /* spotifylogo */ = {isa = PBXFileReference; lastKnownFileType = file; path = spotifylogo; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +102,8 @@
 		6F385DBF2BAF15C800FDACE9 /* crimsonInterface */ = {
 			isa = PBXGroup;
 			children = (
+				6FC5652E2BAF2AB300452569 /* spotifylogo */,
+				6F3B31FE2BAF20B600315971 /* Phosphate.ttc */,
 				6F385DC02BAF15C800FDACE9 /* crimsonInterfaceApp.swift */,
 				6F385DC22BAF15C800FDACE9 /* ContentView.swift */,
 				6F385DC42BAF15CA00FDACE9 /* Assets.xcassets */,
@@ -232,7 +242,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F385DC82BAF15CA00FDACE9 /* Preview Assets.xcassets in Resources */,
+				6FC5652F2BAF2AB300452569 /* spotifylogo in Resources */,
 				6F385DC52BAF15CA00FDACE9 /* Assets.xcassets in Resources */,
+				6F3B31FF2BAF20B600315971 /* Phosphate.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +252,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3B32002BAF20B600315971 /* Phosphate.ttc in Resources */,
+				6FC565302BAF2AB300452569 /* spotifylogo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +261,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3B32012BAF20B600315971 /* Phosphate.ttc in Resources */,
+				6FC565312BAF2AB300452569 /* spotifylogo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +309,17 @@
 			targetProxy = 6F385DD82BAF15CA00FDACE9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6F3B31FE2BAF20B600315971 /* Phosphate.ttc */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6F3B31FD2BAF20B600315971 /* Base */,
+			);
+			name = Phosphate.ttc;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		6F385DDF2BAF15CA00FDACE9 /* Debug */ = {
