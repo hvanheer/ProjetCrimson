@@ -46,8 +46,6 @@ struct ContentView: View {
                     .background(Color.green)
                     .cornerRadius(8)
                 }
-                .padding()
-                
                 Button(action: {
                     // Action à effectuer lors du clic sur le bouton Deezer
                     connexionDeezer()
