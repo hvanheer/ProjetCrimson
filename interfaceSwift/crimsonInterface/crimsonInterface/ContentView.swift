@@ -51,7 +51,7 @@ struct ContentView: View {
                     connexionDeezer()
                 }) {
                     HStack {
-                        Image("spotifylogo.png")
+                        Image("deezerlogo")
                             .resizable()
                             .frame(width: 20, height: 20) // Ajustez la taille de l'image selon vos besoins
                         Text("Se connecter via Deezer")
