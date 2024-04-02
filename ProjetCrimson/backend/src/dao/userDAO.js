@@ -22,22 +22,33 @@ class userDAO {
             await db.close(connexion);
         }
     }
-
-    export async function findUserById(userId) {
-        try {
-            const user = await query('SELECT * FROM users WHERE id = ?', [userId]);
-            return user[0];
-        } catch (err) {
-            throw err;
-        }
+}
+export async function findUserById(userId) {
+    try {
+        const dbParameters = await this.connexionManager.getConnexion();
+        const db = dbParemeters[0];
+        const connexion = dbParemeters[1];
+        const user = await db.query(connexion, 'SELECT * FROM users WHERE id = ?', [userId]);
+        return user[0];
+    } catch (err) {
+        throw err;
     }
+    finally {
+        await db.close(connexion);
+    }
+}
 
-    export async function findAllUser() {
-        try {
-            const users = await query('SELECT id, nom, prenom, email, naissance FROM Client;');
-            return users;
-        } catch (err) {
-            throw err;
-        }
+export async function findAllUser() {
+    try {
+        const dbParameters = await this.connexionManager.getConnexion();
+        const db = dbParemeters[0];
+        const connexion = dbParemeters[1];
+        const users = await db.query(connexion, 'SELECT * FROM users;');
+        return users;
+    } catch (err) {
+        throw err;
+    }
+    finally {
+        await db.close(connexion);
     }
 }
