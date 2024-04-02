@@ -1,8 +1,9 @@
-class UserModel{
+class UserModel {
 
-    // Structure provisoire en attendant la db
-    constructor(id, nom){
-        this. id = id;
+    constructor(id, nom, topMusiques){
+        this.id = id;
         this.nom = nom;
+        this.topMusiques = topMusiques;
     }
+
 }
