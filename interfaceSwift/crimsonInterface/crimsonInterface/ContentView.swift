@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct ContentView: View {
     @State private var username: String = ""
@@ -66,19 +67,42 @@ struct ContentView: View {
         }
     }
 }
-
 func connexionSpotify() {
     guard let url = URL(string: "http://192.168.1.5:3000/connectAPI") else { return }
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print("Erreur de requête : \(error.localizedDescription)")
-                } else if let data = data {
-                    if let responseString = String(data: data, encoding: .utf8) {
-                        print("Réponse de l'API : \(responseString)")
-                    }
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error = error {
+            print("Erreur de requête : \(error.localizedDescription)")
+        } else if let data = data {
+            if let responseString = String(data: data, encoding: .utf8),
+               let responseURL = URL(string: responseString) {
+                DispatchQueue.main.async {
+                    let safariViewController = SFSafariViewController(url: responseURL)
+                    UIApplication.shared.windows.first?.rootViewController?.present(safariViewController, animated: true, completion: nil)
                 }
-            }.resume()
+            }
+        }
+    }.resume()
 }
+//func connexionSpotify() {
+//    guard let url = URL(string: "http://192.168.1.5:3000/connectAPI") else { return }
+//    
+//    URLSession.shared.dataTask(with: url) { data, response, error in
+//        if let error = error {
+//            print("Erreur de requête : \(error.localizedDescription)")
+//        } else if let data = data {
+//            if let responseString = String(data: data, encoding: .utf8) {
+//                print("Réponse de l'API : \(responseString)")
+//                
+//                // Ouvrir l'URL dans l'application
+//                if let url = URL(string: responseString) {
+//                    DispatchQueue.main.async {
+//                        UIApplication.shared.open(url)
+//                    }
+//                }
+//            }
+//        }
+//    }.resume()
+//}
 
 func connexionDeezer() {
     // Action à exécuter lors de la connexion via Deezer
