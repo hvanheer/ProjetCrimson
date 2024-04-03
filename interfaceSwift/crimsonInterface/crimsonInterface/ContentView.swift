@@ -26,19 +26,19 @@ struct ContentView: View {
                     .background(Color.white)
                     .cornerRadius(8)
                     .padding()
+                    .foregroundColor(.black)
                 Text("Connectez vous sur votre plateforme de streaming: ")
                     .bold()
                     .foregroundStyle(.white)
                     .padding()
                     .multilineTextAlignment(.center)
                 Button(action: {
-                    // Action à effectuer lors du clic sur le bouton Spotify
                     connexionSpotify()
                 }) {
                     HStack {
                         Image("spotifylogo")
                             .resizable()
-                            .frame(width: 20, height: 20) // Ajustez la taille de l'image selon vos besoins
+                            .frame(width: 20, height: 20) //
                         Text("Se connecter via Spotify")
                             .foregroundColor(.white)
                     }
@@ -53,7 +53,7 @@ struct ContentView: View {
                     HStack {
                         Image("deezerlogo")
                             .resizable()
-                            .frame(width: 20, height: 20) // Ajustez la taille de l'image selon vos besoins
+                            .frame(width: 20, height: 20) //
                         Text("Se connecter via Deezer")
                             .foregroundColor(.white)
                     }
@@ -68,7 +68,16 @@ struct ContentView: View {
 }
 
 func connexionSpotify() {
-    // Action à exécuter lors de la connexion via Spotify
+    guard let url = URL(string: "http:// 192.168.1.5:3000/getUserInfo") else { return }
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Erreur de requête : \(error.localizedDescription)")
+                } else if let data = data {
+                    if let responseString = String(data: data, encoding: .utf8) {
+                        print("Réponse de l'API : \(responseString)")
+                    }
+                }
+            }.resume()
 }
 
 func connexionDeezer() {
