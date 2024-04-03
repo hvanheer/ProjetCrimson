@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textViewCrimson" type="id"/>
+    <item name="editTextName" type="id"/>
+    <item name="textViewInstruction" type="id"/>
+    <item name="buttonSpotify" type="id"/>
+    <item name="buttonDeezer" type="id"/>
+</resources>
