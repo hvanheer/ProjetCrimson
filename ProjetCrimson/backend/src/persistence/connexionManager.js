@@ -1,23 +1,40 @@
 const { makeDb } = require('mysql-async-simple');
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "nom_utilisateur",
-    password: "mot_de_passe_utilisateur"
-});
+let db = null;
 
-const db = null;
-
-class connexionManager {
-    async initDB() {
+class ConnexionManager {
+    constructor() {
+        this.connection = mysql.createConnection({
+            host: "127.0.0.1",
+            user: "root",
+            password: "",
+            database: "crimson_db"
+        });
         if (db === null) {
-            const db = makeDb();
-            await db.connect(connection);
+            this.db = makeDb();
+        } else {
+            this.db = db;
         }
     }
+
+    async closeDB() {
+        if (this.connection) {
+            console.log("Fermeture de la connection !");
+            await this.db.close(this.connection);
+            console.log("Connection fermee !");
+        }
+    }
+
+    async getDbConnection() {
+        console.log("here");
+        if (!this.connection) {
+            console.log("Ouverture de la connexion !");
+            this.connection = await this.db.connect(this.connection);
+            console.log("Connexion ouverte !");
+        }
+        return this.db;
+    }
 }
-export async function getConnexion() {
-    await this.initDB();
-    return [db, connection];
-}
+
+module.exports = ConnexionManager;

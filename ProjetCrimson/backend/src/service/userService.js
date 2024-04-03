@@ -1,15 +1,11 @@
-const userModel = require('../model/userModel');
 const userDAO = require('../dao/userDAO');
 
-class userService{
+class UserService {
     constructor() {
-        //this.userModel = userModel; // Necessary ?
-        this.userDAO = userDAO;
+        this.userDAO = new userDAO();
     }
 
-    // Mettre aussi sous forme de fonctions ou laisser en promesses ?
-
-    export async function createUser(userGiven) {
+    async createUser(userGiven) {
         try {
             const createdUser = await this.userDAO.createUser(userGiven);
             return createdUser;
@@ -18,21 +14,31 @@ class userService{
         }
     }
 
-    async findUserById(){
-        try{
-            const user = await this.userDAO.findUserById();
+    async findUserById(userID) {
+        try {
+            const user = await this.userDAO.findUserById(userID);
             return user;
-        }catch (err){
-            throw err;
-        }
-    }
-    async findAllUsers(){
-        try{
-            const users = await this.userDAO.findAllUser();
-            return users;
-        }catch (err){
+        } catch (err) {
             throw err;
         }
     }
 
+    async findAllUsers() {
+        try {
+            const users = await this.userDAO.findAllUsers();
+            return users;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async closeDBConnection() {
+        try {
+            this.userDAO.closeDBConnection();
+        } catch (err) {
+            throw err;
+        }
+    }
 }
+
+module.exports = UserService;

@@ -1,54 +1,47 @@
-const userModel = require('../model/userModel');
 const connexionManager = require('../persistence/connexionManager');
-//const {query} = require("mysql/lib/Pool"); // Pas utile si utilisation de mysql-async-simple.
 
-class userDAO {
-
+class UserDAO {
     constructor() {
-        //this.userModel = userModel; // Necessary ?
-        this.connexionManager = connexionManager;
+        this.connexionManager = new connexionManager();
     }
 
-    export async function createUser(userGiven) {
+    async createUser(userGiven) {
         try {
-            const dbParameters = await this.connexionManager.getConnexion();
-            const db = dbParemeters[0];
-            const connexion = dbParemeters[1];
-            const createdUser = await db.query(connexion, 'INSERT INTO users(nom, topMusiques) VALUES(?, ?)', [userGiven.userId], [userGiven.topMusiques]);
+            const db = await this.connexionManager.getDbConnection();
+            const createdUser = await db.query(this.connexionManager.connection, 'INSERT INTO user(user_name) VALUES(?)', [userGiven.name]);
             return createdUser;
         } catch (err) {
             throw err;
-        } finally {
-            await db.close(connexion);
+        }
+    }
+
+    async findUserById(userID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const user = await db.query(this.connexionManager.connection, 'SELECT * FROM user WHERE ID_user = ?', [userID]);
+            return user[0];
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async findAllUsers() {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const users = await db.query(this.connexionManager.connection, 'SELECT * FROM user');
+            return users;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async closeDBConnection() {
+        try {
+            await this.connexionManager.closeDB();
+        } catch (err) {
+            throw err;
         }
     }
 }
-export async function findUserById(userId) {
-    try {
-        const dbParameters = await this.connexionManager.getConnexion();
-        const db = dbParemeters[0];
-        const connexion = dbParemeters[1];
-        const user = await db.query(connexion, 'SELECT * FROM users WHERE id = ?', [userId]);
-        return user[0];
-    } catch (err) {
-        throw err;
-    }
-    finally {
-        await db.close(connexion);
-    }
-}
 
-export async function findAllUser() {
-    try {
-        const dbParameters = await this.connexionManager.getConnexion();
-        const db = dbParemeters[0];
-        const connexion = dbParemeters[1];
-        const users = await db.query(connexion, 'SELECT * FROM users;');
-        return users;
-    } catch (err) {
-        throw err;
-    }
-    finally {
-        await db.close(connexion);
-    }
-}
+module.exports = UserDAO;
