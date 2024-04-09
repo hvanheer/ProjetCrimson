@@ -8,7 +8,8 @@ class UserDAO {
     async createUser(userGiven) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const createdUser = await db.query(this.connexionManager.connection, 'INSERT INTO user(user_name) VALUES(?)', [userGiven.name]);
+            const top25String = JSON.stringify(userGiven.top25); // Serialize the array of objects
+            const createdUser = await db.query(this.connexionManager.connection, 'INSERT INTO user(user_name, top25) VALUES(?, ?)', [userGiven.name, top25String]);
             return createdUser;
         } catch (err) {
             throw err;

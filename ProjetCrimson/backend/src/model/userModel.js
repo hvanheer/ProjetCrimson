@@ -1,16 +1,13 @@
 class UserModel {
 
-    constructor(name){
+    constructor(name, top25){
         this.id = 0;
         this.name = name;
-    }
-
-    updateName(newName) {
-        this.name = newName;
+        this.top25 = top25;
     }
 
     getUserDetails() {
-        return { id: this.id, name: this.name };
+        return { id: this.id, name: this.name, top25: this.top25 };
     }
 }
 
