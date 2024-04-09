@@ -5,6 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="312be513-050f-44c5-a500-c1872298786f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml.orig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/package-lock.json.orig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/package.json.orig" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/api/apiFunctions.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/api/apiLogin.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/api/token.txt" afterDir="false" />
@@ -14,7 +19,15 @@
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/bridge/token.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/bridge/top_tracks.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/bridge/top_tracks.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/dao/userDAO.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/dao/userDAO.js.orig" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/model/userModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/model/userModel.js.orig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/persistence/connexionManager.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/persistence/connexionManager.js.orig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/service/userService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/service/userService.js.orig" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/node_modules/.bin/mime" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/node_modules/.bin/semver" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
@@ -787,12 +800,6 @@
       <change afterPath="$PROJECT_DIR$/top_tracks.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetCrimson/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetCrimson/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetCrimson/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetCrimson/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetCrimson/backend/src/dao/userDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/dao/userDAO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetCrimson/backend/src/model/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/model/userModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetCrimson/backend/src/persistence/connexionManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/persistence/connexionManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjetCrimson/backend/src/service/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/ProjetCrimson/backend/src/service/userService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
