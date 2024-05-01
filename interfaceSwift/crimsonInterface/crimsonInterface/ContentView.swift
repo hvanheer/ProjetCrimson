@@ -32,6 +32,7 @@ struct ContentView: View {
                     .foregroundStyle(.white)
                     .padding()
                     .multilineTextAlignment(.center)
+                //SPOTIFY//////////////////////////////////////////////////////////////////
                 Button(action: {
                     crimsonInterfaceApp.connexionSpotify() // Appel de la fonction depuis l'extension de crimsonInterfaceApp
                 }) {
@@ -46,6 +47,8 @@ struct ContentView: View {
                     .background(Color.green)
                     .cornerRadius(8)
                 }
+                
+                //DEEZER//////////////////////////////////////////////////////////////////
                 Button(action: {
                     // Action à effectuer lors du clic sur le bouton Deezer
                     crimsonInterfaceApp.connexionDeezer() // Appel de la fonction depuis l'extension de crimsonInterfaceApp
@@ -88,4 +91,3 @@ extension Color {
 #Preview {
     ContentView()
 }
-

@@ -34,8 +34,13 @@ extension crimsonInterfaceApp {
             }
         }.resume()
     }
+
     
     static func connexionDeezer() {
-        // Action à exécuter lors de la connexion via Deezer
+        guard let url = URL(string: "http://54.38.241.241:9999/deezer") else { return }
+        print("Ouverture de l'URL: \(url)")
+        let safariViewController = SFSafariViewController(url: url)
+        UIApplication.shared.windows.first?.rootViewController?.present(safariViewController, animated: true, completion: nil)
     }
+
 }
