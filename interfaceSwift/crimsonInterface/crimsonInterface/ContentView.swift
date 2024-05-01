@@ -9,63 +9,82 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var username: String = ""
-    
+    struct TrackInfo: Codable {
+        let name: String
+        let artist: String
+        let albumArtwork: String
+        // Ajoutez d'autres propriétés si nécessaire
+    }
+
     var body: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x660033), Color(hex: 0x0066CC)]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Text("CRIMSON")
-                    .font(.custom("Phosphate", size: 40))
-                    .foregroundColor(.white)
-                    .padding(.top, 50)
-                
-                TextField("Entrer votre pseudo", text: $username)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .padding()
-                    .foregroundColor(.black)
-                Text("Connectez vous sur votre plateforme de streaming: ")
-                    .bold()
-                    .foregroundStyle(.white)
-                    .padding()
-                    .multilineTextAlignment(.center)
-                //SPOTIFY//////////////////////////////////////////////////////////////////
-                Button(action: {
-                    crimsonInterfaceApp.connexionSpotify() // Appel de la fonction depuis l'extension de crimsonInterfaceApp
-                }) {
-                    HStack {
-                        Image("spotifylogo")
-                            .resizable()
-                            .frame(width: 20, height: 20) //
-                        Text("Se connecter via Spotify")
-                            .foregroundColor(.white)
+        NavigationView {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color(hex: 0x660033), Color(hex: 0x0066CC)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
+
+                VStack {
+                    Text("CRIMSON")
+                        .font(.custom("Phosphate", size: 40))
+                        .foregroundColor(.white)
+                        .padding(.top, 50)
+
+                    TextField("Entrer votre pseudo", text: $username)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .padding()
+                        .foregroundColor(.black)
+
+                    Text("Connectez-vous sur votre plateforme de streaming:")
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding()
+                        .multilineTextAlignment(.center)
+
+                    Button(action: {
+                        // Action à effectuer lors du clic sur le bouton Spotify
+                        crimsonInterfaceApp.connexionSpotify()
+                    }) {
+                        HStack {
+                            Image("spotifylogo")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                            Text("Se connecter via Spotify")
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        .background(Color.green)
+                        .cornerRadius(8)
+                    }
+
+                    Button(action: {
+                        // Action à effectuer lors du clic sur le bouton Deezer
+                        crimsonInterfaceApp.connexionDeezer()
+                    }) {
+                        HStack {
+                            Image("deezerlogo")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                            Text("Se connecter via Deezer")
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        .background(Color.purple)
+                        .cornerRadius(8)
                     }
                     .padding()
-                    .background(Color.green)
-                    .cornerRadius(8)
-                }
-                
-                //DEEZER//////////////////////////////////////////////////////////////////
-                Button(action: {
-                    // Action à effectuer lors du clic sur le bouton Deezer
-                    crimsonInterfaceApp.connexionDeezer() // Appel de la fonction depuis l'extension de crimsonInterfaceApp
-                }) {
-                    HStack {
-                        Image("deezerlogo")
-                            .resizable()
-                            .frame(width: 20, height: 20) //
-                        Text("Se connecter via Deezer")
+
+                    NavigationLink(destination: MusicPlayerView(track: MusicTrack(name: "Example Track", artist: "Example Artist", albumArtwork: "album_cover"))) {
+                        Text("Go to Music Player")
                             .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
                     }
                     .padding()
-                    .background(Color.purple)
-                    .cornerRadius(8)
                 }
-                .padding()
             }
+            .navigationBarHidden(true)
         }
     }
 }
@@ -75,6 +94,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
 
 extension Color {
     init(hex: UInt, alpha: Double = 1.0) {
