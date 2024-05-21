@@ -26,9 +26,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ApiActivity"
+        <activity
+            android:name=".MusicActivity"
             android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>
