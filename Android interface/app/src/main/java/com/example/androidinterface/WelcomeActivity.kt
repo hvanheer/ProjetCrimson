@@ -49,7 +49,7 @@ class WelcomeActivity : AppCompatActivity() {
                 connexionDeezer(this)
                 Log.d("Pseudo", "Pseudo: $pseudo - Action: Se connecter à Deezer")
                 editTextName.text.clear()
-                // Mettez votre action de connexion à Deezer ici
+
             } else {
                 Toast.makeText(this, "Veuillez entrer un pseudo", Toast.LENGTH_SHORT).show()
             }

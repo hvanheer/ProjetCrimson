@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <TextView
+        android:id="@+id/textViewLobby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/phosphate"
+        android:text="LOBBY"
+        android:textColor="@android:color/white"
+        android:textSize="35sp"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="92dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textIdLobby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="194dp"
+        tools:layout_editor_absoluteY="186dp" />
+
+    <TextView
+        android:id="@+id/nb_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="x"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:visibility="visible"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewConnectedPlayers"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewConnectedPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="256dp"
+        android:text="joueur.s connecté.s : "
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/nb_player"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonJoinLobby"
+        android:layout_width="231dp"
+        android:layout_height="62dp"
+        android:backgroundTint="@color/green"
+        android:fontFamily="@font/helvetica"
+        android:padding="10dp"
+        android:text="LANCER"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="618dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

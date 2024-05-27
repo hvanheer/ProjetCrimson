@@ -81,10 +81,10 @@ class MusicActivity : AppCompatActivity() {
     private fun onMusicPlayingStateChanged(isPlaying: Boolean) {
         isMusicPlaying = isPlaying
         if (isPlaying) {
-            buttonPause.setBackgroundResource(R.drawable.pause) // Changez ceci pour le bon drawable
+            buttonPause.setBackgroundResource(R.drawable.pause)
             showToast("Lecture de la musique lancée avec succès.")
         } else {
-            buttonPause.setBackgroundResource(R.drawable.play) // Changez ceci pour le bon drawable
+            buttonPause.setBackgroundResource(R.drawable.play)
             showToast("Pause de la musique lancée avec succès.")
         }
     }
