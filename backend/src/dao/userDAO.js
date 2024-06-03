@@ -9,7 +9,7 @@ class UserDAO {
         try {
             const db = await this.connexionManager.getDbConnection();
             const top25String = JSON.stringify(userGiven.top25); // Serialize the array of objects
-            const createdUser = await db.query(this.connexionManager.connection, 'INSERT INTO user(user_name, top25) VALUES(?, ?)', [userGiven.name, top25String]);
+            const createdUser = await db.query(this.connexionManager.connection, 'INSERT INTO players(user_name, top25) VALUES(?, ?)', [userGiven.name, top25String]);
             return createdUser;
         } catch (err) {
             throw err;
@@ -19,7 +19,7 @@ class UserDAO {
     async findUserById(userID) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const user = await db.query(this.connexionManager.connection, 'SELECT * FROM user WHERE ID_user = ?', [userID]);
+            const user = await db.query(this.connexionManager.connection, 'SELECT * FROM players WHERE ID_user = ?', [userID]);
             return user[0];
         } catch (err) {
             throw err;
@@ -29,7 +29,7 @@ class UserDAO {
     async findAllUsers() {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const users = await db.query(this.connexionManager.connection, 'SELECT * FROM user');
+            const users = await db.query(this.connexionManager.connection, 'SELECT * FROM players');
             return users;
         } catch (err) {
             throw err;
