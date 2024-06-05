@@ -118,6 +118,7 @@ function connectAPI() {
                 );
                 res.send('Success! You can now close the window.');
                 isSpotify = true;
+                console.log("isSpotify:", isSpotify);
 
                 setInterval(async () => {
                     const data = await spotifyApi.refreshAccessToken();
