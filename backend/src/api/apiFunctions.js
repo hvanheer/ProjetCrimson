@@ -121,7 +121,7 @@ async function pauseSong(){
     }
 }
 
-async function pauseSong() {
+async function pauseSongDeezer() {
     try {
         // Pause the currently playing song
         DZ.player.pause();
