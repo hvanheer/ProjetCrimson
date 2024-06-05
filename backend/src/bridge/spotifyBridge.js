@@ -1,9 +1,9 @@
 const express = require('express');
-const connectAPI = require('../api/apiLogin');
 const { playSong, pauseSong, playSongDeezer, pauseSongDeezer } = require('../api/apiFunctions');
 const fs = require('fs');
 const { promisify } = require('util');
 const {isSpotify} = require("../api/apiLogin");
+const {connectAPI} = require("../api/apiLogin");
 const readFileAsync = promisify(fs.readFile);
 
 const app = express();
