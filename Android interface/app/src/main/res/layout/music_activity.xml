@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
-        android:id="@+id/imageViewAlbumArt"
+        android:id="@+id/albumCover"
         android:layout_width="391dp"
         android:layout_height="327dp"
         android:layout_marginTop="156dp"

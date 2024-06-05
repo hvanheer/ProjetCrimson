@@ -56,7 +56,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun connexionSpotify(activity: AppCompatActivity) {
         val url = "http://54.38.241.241:3000/connectAPI"
-        val callbackUrl = "http://54.38.241.241:9999"
+        val callbackUrl = "http://54.38.241.241:9999/callback?code=AQDqDmheoAk7qZTW1DZl8gUXJ9Nuk5R8PgscYEVJml08di40TZlriw3hB9wlk8AqrNeUHOGeVSUUd5SKR7H8tEfkMlRT4MgKL_mC6EVHKEE3DkpCty8VuGMFo7b4p1vkKLz83EH11KJPHeHz-7iBpGRN4-6bWCkJShBVPLk8p5-gN0JDgKtAhS6ACsRHXMZfAPoZTlXrKD6YVzZMztgrGaENUm3aRzkHajUWl0T3bGdfQB7wo5PxwbYiy6w1AY-6G4Kmq_44xWlAtaGXlAq2lizVfrnd9V4El9nGZCYWHXXy6BwlzyLTKbtQWrOGsC28ZEZZd2y08wuwtIWbKxn9bx7PsoHkcE1vDfhBCRcQXfI8gzoptrJkvRawAVv4dT82Ru_5Rwez1De4wZ4Bhez7PmxGV8Hj5gwSIQ9vdZeQ04svHXbxje3ShP_fT2yd1OGO3i_K98PDAuizhKjcIG6GTdtG94FizzePGWvsDKXLJw9coI9vXjTUCaSDAj3jfsVf7zGxiuyhDBAtf6lcXaCBMh85mFKTs19VziDIi6NJ--9Ytdx2AoMFdn9wRNyhGK0NnIp_y5bon4uvT9xAhCF0KmYnKtp_m0lNp7wLtbE-YTjj7tat1DOcdIxQYUosSANhfV5BQiQzDzlF6LJrXS34kRCaLBy9JzcZLcMdtLe8AxxWYEHojjkr0rkAxlZAjNxTj5hQF55bl9JNYm6HMa8Q7DYlgeqcLpwTk"
 
         GlobalScope.launch(Dispatchers.IO) {
 
@@ -82,8 +82,8 @@ class WelcomeActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         Log.d("WebViewContent", "Redirected Data from $currentUrl: $redirectedData")
                     }
-                    
-                    if (currentUrl.startsWith(callbackUrl)) {
+
+                    if (currentUrl==callbackUrl) {
                         withContext(Dispatchers.Main) {
                             val choiceLobbyIntent = Intent(activity, ChoiceActivity::class.java)
                             activity.startActivity(choiceLobbyIntent)
@@ -97,9 +97,6 @@ class WelcomeActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 
     private fun connexionDeezer(activity: AppCompatActivity) {
 
@@ -122,9 +119,12 @@ class WelcomeActivity : AppCompatActivity() {
                         activity.startActivity(intent)
                     }
                 }
+
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
     }
 }
+
+

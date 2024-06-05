@@ -34,7 +34,6 @@ class CreateLobbyActivity : AppCompatActivity() {
 
             } else {
                 Toast.makeText(this, "Veuillez entrer un ID de Lobby", Toast.LENGTH_SHORT).show()
-
             }
         }
 
