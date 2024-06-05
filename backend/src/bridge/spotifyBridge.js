@@ -26,6 +26,7 @@ app.get('/connectAPI', (req, res) => {
 // Endpoint to play songs
 app.get('/play', async (req, res) => {
     try {
+        console.log('isSpotify:', isSpotify);
         if (isSpotify) {
             // Play a random track on Spotify
             // Read the top tracks JSON file
