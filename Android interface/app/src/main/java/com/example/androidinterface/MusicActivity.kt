@@ -65,6 +65,7 @@ class MusicActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Main).launch {
                         onMusicPlayingStateChanged(false)
                     }
+
                 } else {
                     CoroutineScope(Dispatchers.Main).launch {
                         showToast("Erreur lors de la requête : ${connection.responseCode}")

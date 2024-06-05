@@ -2,26 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ApiActivity">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\FX506\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-10T10:07:21.212080200Z" />
-        </State>
-      </entry>
-      <entry key="ApiActivity (1)">
+      <entry key="ChoiceActivity">
         <State />
       </entry>
-      <entry key="MusicActivity">
+      <entry key="CreateLobbyActivity">
+        <State />
+      </entry>
+      <entry key="JoinLobbyActivity">
+        <State />
+      </entry>
+      <entry key="LobbyActivity">
         <State />
       </entry>
       <entry key="WelcomeActivity">

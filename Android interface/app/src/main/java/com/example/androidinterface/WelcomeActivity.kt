@@ -20,7 +20,6 @@ class WelcomeActivity : AppCompatActivity() {
     private lateinit var editTextName: EditText
     private lateinit var buttonSpotify: Button
     private lateinit var buttonDeezer: Button
-    private lateinit var buttonMusic: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +28,6 @@ class WelcomeActivity : AppCompatActivity() {
         editTextName = findViewById(R.id.editTextName)
         buttonSpotify = findViewById(R.id.buttonSpotify)
         buttonDeezer = findViewById(R.id.buttonDeezer)
-        buttonMusic = findViewById(R.id.buttonMusic)
 
         buttonSpotify.setOnClickListener {
             val pseudo = editTextName.text.toString()
@@ -54,32 +52,52 @@ class WelcomeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Veuillez entrer un pseudo", Toast.LENGTH_SHORT).show()
             }
         }
-
-        buttonMusic.setOnClickListener {
-            val intent = Intent(this, MusicActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun connexionSpotify(activity: AppCompatActivity) {
         val url = "http://54.38.241.241:3000/connectAPI"
+        val callbackUrl = "http://54.38.241.241:9999"
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val connection = URL(url).openConnection()
-                val data = connection.getInputStream().bufferedReader().use { it.readText() }
-                val responseURL = Uri.parse(data)
+                var currentUrl = url
+                var redirectedData: String
 
-                withContext(Dispatchers.Main) {
-                    val intent = Intent(Intent.ACTION_VIEW, responseURL)
-                    activity.startActivity(intent)
+                while (true) {
+                    val connection = URL(currentUrl).openConnection()
+                    val data = connection.getInputStream().bufferedReader().use { it.readText() }
+                    val responseURL = Uri.parse(data)
+
+                    withContext(Dispatchers.Main) {
+                        val intent = Intent(Intent.ACTION_VIEW, responseURL)
+                        activity.startActivity(intent)
+                        Log.d("WebViewContent", "Data from $currentUrl: $data")
+                    }
+
+                    currentUrl = responseURL.toString()
+                    val redirectedConnection = URL(currentUrl).openConnection()
+                    redirectedData = redirectedConnection.getInputStream().bufferedReader().use { it.readText() }
+
+                    withContext(Dispatchers.Main) {
+                        Log.d("WebViewContent", "Redirected Data from $currentUrl: $redirectedData")
+                    }
+
+                    if (currentUrl.startsWith(callbackUrl)) {
+                        withContext(Dispatchers.Main) {
+                            val choiceLobbyIntent = Intent(activity, ChoiceActivity::class.java)
+                            activity.startActivity(choiceLobbyIntent)
+                            activity.finish()
+                        }
+                    }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-
             }
         }
     }
+
+
+
 
     private fun connexionDeezer(activity: AppCompatActivity) {
 

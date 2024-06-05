@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,44 +10,50 @@
         android:id="@+id/textViewLobby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
         android:fontFamily="@font/phosphate"
-        android:text="VOTE"
+        android:text="CRIMSON"
         android:textColor="@android:color/white"
         android:textSize="35sp"
         android:visibility="visible"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="131dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/nb_player"
-        android:layout_width="23dp"
-        android:layout_height="26dp"
-        android:text="x"
+        android:layout_width="44dp"
+        android:layout_height="31dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="256dp"
+        android:text="X/X"
         android:textColor="@android:color/white"
         android:textSize="25sp"
         android:textStyle="bold"
         android:visibility="visible"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="203dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewConnectedPlayers"
-        android:layout_width="55dp"
-        android:layout_height="27dp"
-        android:text="votes"
+        android:layout_width="104dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="144dp"
+        android:layout_marginTop="256dp"
+        android:text="vote.s : "
         android:textColor="@android:color/white"
         android:textSize="25sp"
         android:textStyle="bold"
         android:visibility="visible"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="92dp"
-        tools:layout_editor_absoluteY="203dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonJoinLobby"
         android:layout_width="229dp"
         android:layout_height="53dp"
+        android:layout_marginTop="340dp"
         android:backgroundTint="@color/grey"
         android:fontFamily="@font/helvetica"
         android:padding="10dp"
@@ -55,8 +62,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="visible"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="267dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

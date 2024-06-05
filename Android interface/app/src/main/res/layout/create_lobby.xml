@@ -17,91 +17,66 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/textViewLobby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="148dp"
         android:fontFamily="@font/phosphate"
-        android:text="LOBBY"
+        android:text="CRIMSON"
         android:textColor="@android:color/white"
         android:textSize="35sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textIdLobby"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
-        android:text="ID"
+        android:layout_marginTop="292dp"
+        android:text="Créer un lobby :"
         android:textColor="@android:color/white"
         android:textSize="25sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/nb_player"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:text="x"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewConnectedPlayers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:text="joueur.s connecté.s :"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonLaunch"
-        android:layout_width="231dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="636dp"
-        android:backgroundTint="@color/green"
-        android:fontFamily="@font/helvetica"
-        android:padding="10dp"
-        android:text="LANCER"
-        android:textAllCaps="false"
-        android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textPlayers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="344dp"
-        android:text="- players"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
+    <EditText
+        android:id="@+id/editTextIdLobby"
+        android:layout_width="360dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="404dp"
+        android:background="@drawable/background_rounded"
+        android:fontFamily="@font/helvetica"
+        android:gravity="center"
+        android:hint="Écrivez un id pour le lobby"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonCreateLobby"
+        android:layout_width="219dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="572dp"
+        android:backgroundTint="@color/purple"
+        android:fontFamily="@font/helvetica"
+        android:padding="10dp"
+        android:text="Créer un lobby"
+        android:textAllCaps="false"
+        android:textSize="13sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
