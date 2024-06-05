@@ -34,14 +34,17 @@ async function getMyTopTracks() {
         const tracksText = topTracks.body.items.map((track, index) => `${index + 1}. ${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`).join('\n');
         fs.writeFileSync('top_tracks.txt', tracksText);
 
-        //let index = 1; NEEDS MODIFYING
         // Extract necessary information from each track
         const tracksData = topTracks.body.items.map(track => ({
-            //position: track.index, NEEDS MODIFYING
+            trackId: track.id,
             name: track.name,
             artists: track.artists.map(artist => artist.name),
-            album: track.album.name,
-            release_date: track.album.release_date
+            album: {
+                name: track.album.name,
+                coverUrl: track.album.images.length > 0 ? track.album.images[0].url : null // Use the first image as the cover URL
+            },
+            release_date: track.album.release_date,
+            duration_ms: track.duration_ms
         }));
 
         // Write the tracks data to a JSON file
@@ -61,6 +64,8 @@ async function getMyTopTracks() {
     }
 }
 
+
+
 async function getUserData() {
     try {
         // Call both functions concurrently using Promise.all()
@@ -77,9 +82,33 @@ async function getUserData() {
     }
 }
 
+// Function to play a specific track
+async function playSong(trackId, positionMs) {
+    try {
+        // Play the specified track with the specified starting position
+        await spotifyApi.play({
+            uris: [`spotify:track:${trackId}`],
+            position_ms: positionMs
+        });
+        console.log(`Playing track with ID ${trackId} starting at ${positionMs} milliseconds`);
+    } catch (error) {
+        console.error('Error playing track:', error);
+        throw error;
+    }
+}
+
+async function pauseSong(){
+    try {
+        // Pause the currently playing song
+        await spotifyApi.pause();
+    } catch (error) {
+        console.error('Error pausing the song:', error);
+    }
+}
+
 
 // Export des fonctions
-module.exports = { getUserName, getMyTopTracks, getUserData };
+module.exports = { getUserName, getMyTopTracks, getUserData, playSong, pauseSong };
 
 // Call the function to get the user's top tracks
 //getMyTopTracks();
