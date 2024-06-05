@@ -73,8 +73,7 @@ struct ContentView: View {
                         .cornerRadius(8)
                     }
                     .padding()
-
-                    NavigationLink(destination: MusicPlayerView(track: MusicTrack(name: "Example Track", artist: "Example Artist", albumArtwork: "album_cover"))) {
+                    NavigationLink(destination: MusicPlayerView()) {
                         Text("Go to Music Player")
                             .foregroundColor(.white)
                             .padding()

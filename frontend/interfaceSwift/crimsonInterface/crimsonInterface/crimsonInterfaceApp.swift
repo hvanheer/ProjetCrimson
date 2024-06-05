@@ -52,21 +52,47 @@ extension crimsonInterfaceApp {
         let safariViewController = SFSafariViewController(url: url)
         UIApplication.shared.windows.first?.rootViewController?.present(safariViewController, animated: true, completion: nil)
     }
-    static func playMusic() {
-           guard let url = URL(string: "http://54.38.241.241:3000/play") else { return }
-           
-           URLSession.shared.dataTask(with: url) { data, response, error in
-               if let error = error {
-                   print("Erreur de requête : \(error.localizedDescription)")
-               } else if let response = response as? HTTPURLResponse {
-                   if response.statusCode == 200 {
-                       print("Lecture de la musique lancée avec succès.")
-                   } else {
-                       print("Erreur lors de la requête : \(response.statusCode)")
-                   }
-               }
-           }.resume()
-       }
+    
+    
+    
+    
+    
+    
+    static func playMusic(completion: @escaping (String, [String]) -> Void) {
+            guard let url = URL(string: "http://54.38.241.241:3000/play") else { return }
+            
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Erreur de requête : \(error.localizedDescription)")
+                } else if let response = response as? HTTPURLResponse {
+                    if response.statusCode == 200 {
+                        if let data = data {
+                            // Print the raw data response from the API
+                            if let jsonString = String(data: data, encoding: .utf8) {
+                                print("Réponse de l'API : \(jsonString)")
+                            }
+                            
+                            // Parse the JSON data
+                            do {
+                                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                                   let trackInfo = json["trackInfo"] as? [String: Any],
+                                   let trackName = trackInfo["trackName"] as? String,
+                                   let trackArtists = trackInfo["trackArtists"] as? [String] {
+                                    DispatchQueue.main.async {
+                                        completion(trackName, trackArtists)
+                                    }
+                                }
+                            } catch {
+                                print("Erreur de parsing JSON : \(error.localizedDescription)")
+                            }
+                        }
+                        print("Lecture de la musique lancée avec succès.")
+                    } else {
+                        print("Erreur lors de la requête : \(response.statusCode)")
+                    }
+                }
+            }.resume()
+        }
     static func pauseMusic() {
            guard let url = URL(string: "http://54.38.241.241:3000/pause") else { return }
            

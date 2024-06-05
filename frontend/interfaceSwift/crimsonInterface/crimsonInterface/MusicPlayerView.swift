@@ -1,17 +1,13 @@
 import SwiftUI
 import Foundation
 
-struct MusicTrack {
-    var name: String
-    var artist: String
-    var albumArtwork: String
-}
-
 struct MusicPlayerView: View {
     @State private var isPlaying = false // État de lecture
     @State private var playbackProgress: Double = 0.5 // Progression de la lecture
     
-    let track: MusicTrack
+    @State private var trackName: String = "Loading..." // Nom de la piste musicale
+    @State private var artistName: String = "Loading..." // Nom de l'artiste
+    @State private var albumArtworkName: String = "default_album_cover" // Nom de l'image de la pochette de l'album
     
     var body: some View {
         NavigationView {
@@ -21,7 +17,7 @@ struct MusicPlayerView: View {
                 
                 VStack(spacing: 20) {
                     // Image de la pochette de l'album
-                    Image(track.albumArtwork)
+                    Image(albumArtworkName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 200, height: 200)
@@ -29,12 +25,12 @@ struct MusicPlayerView: View {
                         .shadow(radius: 10)
                     
                     // Informations sur la piste musicale
-                    Text(track.name)
+                    Text(trackName)
                         .font(.title)
                         .foregroundColor(.white)
                         .fontWeight(.bold)
                     
-                    Text(track.artist)
+                    Text(artistName)
                         .font(.headline)
                         .foregroundColor(.gray)
                     
@@ -46,7 +42,10 @@ struct MusicPlayerView: View {
                         if isPlaying {
                             crimsonInterfaceApp.pauseMusic()
                         } else {
-                            crimsonInterfaceApp.playMusic()
+                            crimsonInterfaceApp.playMusic { track, artists in
+                                self.trackName = track
+                                self.artistName = artists.joined(separator: ", ")
+                            }
                         }
                         self.isPlaying.toggle() // Inverse l'état de lecture
                     }) {
@@ -62,7 +61,6 @@ struct MusicPlayerView: View {
             .navigationBarHidden(true) // Masquer la barre de navigation
         }
     }
-    
     
     // Barre de progression Apple Music style
     struct AppleMusicProgressBar: View {
@@ -92,10 +90,9 @@ struct MusicPlayerView: View {
         }
     }
     
-    
     struct MusicPlayerView_Previews: PreviewProvider {
         static var previews: some View {
-            MusicPlayerView(track: MusicTrack(name: "Give Life Back To Music", artist: "Daft Punk", albumArtwork: "album_cover"))
+            MusicPlayerView()
         }
     }
-}	
+}
