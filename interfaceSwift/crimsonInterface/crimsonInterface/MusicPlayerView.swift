@@ -98,4 +98,4 @@ struct MusicPlayerView: View {
             MusicPlayerView(track: MusicTrack(name: "Give Life Back To Music", artist: "Daft Punk", albumArtwork: "album_cover"))
         }
     }
-}
+}	

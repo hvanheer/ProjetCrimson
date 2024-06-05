@@ -25,7 +25,7 @@ struct crimsonInterfaceApp: App {
 
 extension crimsonInterfaceApp {
     static func connexionSpotify() {
-        guard let url = URL(string: "http://192.168.1.5:3000/connectAPI") else { return }
+        guard let url = URL(string: "http://54.38.241.241:3000/connectAPI") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Erreur de requête : \(error.localizedDescription)")
@@ -53,7 +53,7 @@ extension crimsonInterfaceApp {
         UIApplication.shared.windows.first?.rootViewController?.present(safariViewController, animated: true, completion: nil)
     }
     static func playMusic() {
-           guard let url = URL(string: "http://192.168.1.5:3000/play") else { return }
+           guard let url = URL(string: "http://54.38.241.241:3000/play") else { return }
            
            URLSession.shared.dataTask(with: url) { data, response, error in
                if let error = error {
@@ -68,7 +68,7 @@ extension crimsonInterfaceApp {
            }.resume()
        }
     static func pauseMusic() {
-           guard let url = URL(string: "http://192.168.1.5:3000/pause") else { return }
+           guard let url = URL(string: "http://54.38.241.241:3000/pause") else { return }
            
            URLSession.shared.dataTask(with: url) { data, response, error in
                if let error = error {
