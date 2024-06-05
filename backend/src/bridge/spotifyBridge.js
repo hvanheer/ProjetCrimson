@@ -53,11 +53,6 @@ app.get('/play', async (req, res) => {
                 trackInfo: trackInfo
             });
 
-            // Pause the song after 5 seconds
-            setTimeout(async () => {
-                await pauseSong();
-                console.log('Song paused after 5 seconds.');
-            }, 5000); // 5000 milliseconds = 5 seconds
         } else {
             // Play a random track on Deezer
             await playSongDeezer();
