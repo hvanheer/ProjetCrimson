@@ -45,7 +45,7 @@ app.get('/play', async (req, res) => {
             const trackInfo = {
                 trackName: randomTrack.name,
                 trackArtists: randomTrack.artists,
-                trackAlbumCover: randomTrack.coverUrl
+                trackAlbumCover: randomTrack.album.coverUrl
             };
 
             // Send response containing both track information and played track information
