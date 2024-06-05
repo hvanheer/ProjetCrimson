@@ -8,7 +8,6 @@ const UserService = require("../service/userService");
 const queryString = require("querystring");
 
 let isLoggedIn = false;
-let isSpotify = false;
 
 // This file is copied from: https://github.com/thelinmichael/spotify-web-api-node/blob/master/examples/tutorial/00-get-access-token.js
 
@@ -213,4 +212,4 @@ function connectAPI() {
 //connectAPI();
 
 // Export de la fonction connectAPI()
-module.exports = {connectAPI, isSpotify};
+module.exports = connectAPI;
