@@ -6,7 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -17,6 +20,7 @@ class MusicActivity : AppCompatActivity() {
     private val pauseUrl = "http://54.38.241.241:3000/pause"
     private lateinit var buttonPause: ImageButton
     private var isMusicPlaying = false
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + Job())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,23 +36,32 @@ class MusicActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineScope.cancel() // Annuler toutes les coroutines lancées par ce scope
+    }
+
     private fun playMusic() {
         val url = URL(playUrl)
-        CoroutineScope(Dispatchers.IO).launch {
+        coroutineScope.launch(Dispatchers.IO) {
             try {
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
-                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        onMusicPlayingStateChanged(true)
+                try {
+                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                        withContext(Dispatchers.Main) {
+                            onMusicPlayingStateChanged(true)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            showToast("Erreur lors de la requête : ${connection.responseCode}")
+                        }
                     }
-                } else {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        showToast("Erreur lors de la requête : ${connection.responseCode}")
-                    }
+                } finally {
+                    connection.disconnect()
                 }
             } catch (e: IOException) {
-                CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Main) {
                     showToast("Erreur de requête : ${e.localizedMessage}")
                 }
             }
@@ -57,22 +70,25 @@ class MusicActivity : AppCompatActivity() {
 
     private fun pauseMusic() {
         val url = URL(pauseUrl)
-        CoroutineScope(Dispatchers.IO).launch {
+        coroutineScope.launch(Dispatchers.IO) {
             try {
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
-                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        onMusicPlayingStateChanged(false)
+                try {
+                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                        withContext(Dispatchers.Main) {
+                            onMusicPlayingStateChanged(false)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            showToast("Erreur lors de la requête : ${connection.responseCode}")
+                        }
                     }
-
-                } else {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        showToast("Erreur lors de la requête : ${connection.responseCode}")
-                    }
+                } finally {
+                    connection.disconnect()
                 }
             } catch (e: IOException) {
-                CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Main) {
                     showToast("Erreur de requête : ${e.localizedMessage}")
                 }
             }
@@ -94,3 +110,4 @@ class MusicActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
+

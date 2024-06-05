@@ -2,19 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ChoiceActivity">
-        <State />
-      </entry>
-      <entry key="CreateLobbyActivity">
-        <State />
-      </entry>
-      <entry key="JoinLobbyActivity">
-        <State />
-      </entry>
-      <entry key="LobbyActivity">
-        <State />
-      </entry>
-      <entry key="WelcomeActivity">
+      <entry key="MusicActivity">
         <State />
       </entry>
       <entry key="app">
