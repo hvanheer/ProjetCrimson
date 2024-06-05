@@ -151,6 +151,10 @@ function connectAPI() {
                 const response = await axios.get(access_token_url);
                 const parsedResponse = queryString.parse(response.data);
                 const accessToken = parsedResponse.access_token;
+
+                // Once you get the access token, save it to a file
+                fs.writeFileSync('token.txt', accessToken);
+
                 if (accessToken) {
                     const top_tracks_url = `https://api.deezer.com/user/me/history?access_token=${accessToken}&limit=25`; // Change limit to 25
                     try {
