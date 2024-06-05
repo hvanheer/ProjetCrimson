@@ -59,6 +59,7 @@ class WelcomeActivity : AppCompatActivity() {
         val callbackUrl = "http://54.38.241.241:9999"
 
         GlobalScope.launch(Dispatchers.IO) {
+
             try {
                 var currentUrl = url
                 var redirectedData: String
@@ -81,7 +82,7 @@ class WelcomeActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         Log.d("WebViewContent", "Redirected Data from $currentUrl: $redirectedData")
                     }
-
+                    
                     if (currentUrl.startsWith(callbackUrl)) {
                         withContext(Dispatchers.Main) {
                             val choiceLobbyIntent = Intent(activity, ChoiceActivity::class.java)
@@ -90,6 +91,7 @@ class WelcomeActivity : AppCompatActivity() {
                         }
                     }
                 }
+
             } catch (e: IOException) {
                 e.printStackTrace()
             }
