@@ -33,7 +33,7 @@ class GrpLinkDAO {
         }
     }
 
-    async findAllGrpLinkModel() {
+    async findAllGrpLink() {
         try {
             const db = await this.connexionManager.getDbConnection();
             return await db.query(this.connexionManager.connection, 'SELECT * FROM grplink');

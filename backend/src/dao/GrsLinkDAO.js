@@ -1,6 +1,6 @@
 const connexionManager = require('../persistence/connexionManager');
 
-class GrpLinkDAO {
+class GrsLinkDAO {
     constructor() {
         this.connexionManager = new connexionManager();
     }
@@ -34,7 +34,7 @@ class GrpLinkDAO {
     }
 
 
-    async findAllGrsLinkModel() {
+    async findAllGrsLink() {
         try {
             const db = await this.connexionManager.getDbConnection();
             return await db.query(this.connexionManager.connection, 'SELECT * FROM grslink');
@@ -52,4 +52,4 @@ class GrpLinkDAO {
     }
 }
 
-module.exports = GrpLinkDAO;
+module.exports = GrsLinkDAO;

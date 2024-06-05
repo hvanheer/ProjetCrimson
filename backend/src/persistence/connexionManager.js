@@ -8,7 +8,7 @@ class ConnexionManager {
         this.connection = mysql.createConnection({
             host: "localhost",
             user: "root",
-            password: "your_password",
+            password: "changeme",
             database: "crimson"
         });
         if (db === null) {

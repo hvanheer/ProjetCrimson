@@ -1,0 +1,41 @@
+const songDAO = require('../dao/songDAO');
+
+class SongService {
+    constructor() {
+        this.songDAO = new songDAO();
+    }
+
+    async createSong(song) {
+        try {
+            return await this.songDAO.createSong(song);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async findSongById(songID) {
+        try {
+            return await this.songDAO.findSongById(songID);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async findAllSongs() {
+        try {
+            return await this.songDAO.findAllSong();
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async closeDBConnection() {
+        try {
+            await this.songDAO.closeDBConnection();
+        } catch (err) {
+            throw err;
+        }
+    }
+}
+
+module.exports = SongService;

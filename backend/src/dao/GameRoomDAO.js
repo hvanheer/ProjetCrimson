@@ -8,7 +8,7 @@ class GameRoomDAO {
     async createGameRoom(gameRoom) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            return await db.query(this.connexionManager.connection, 'INSERT INTO gamerooms(connexion_code, numberOfPlayers, state, numberOfRounds, currentRound) VALUES(?, ?, ?, ?, ?)', [gameRoom.connexion_code, gameRoom.numberOfPlayers, gameRoom.state, gameRoom.numberOfRounds, gameRoom.currentRound]);
+            return await db.query(this.connexionManager.connection, 'INSERT INTO gamerooms(connexion_code, numberOfPlayers, state, numberOfRounds, currentRound, codeAleatoire) VALUES(?, ?, ?, ?, ?, ?)', [gameRoom.connexion_code, gameRoom.numberOfPlayers, gameRoom.state, gameRoom.numberOfRounds, gameRoom.currentRound, gameRoom.codeAleatoire]);
         } catch (err) {
             throw err;
         }
