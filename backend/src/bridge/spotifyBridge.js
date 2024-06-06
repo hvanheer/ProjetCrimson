@@ -1,11 +1,12 @@
-const express = require('express');
 const { playSong, pauseSong, playSongDeezer, pauseSongDeezer, getMyTopTracks } = require('../api/apiFunctions');
+const {isSpotify} = require("../api/apiLogin");
+
+const express = require('express');
+const session = require('express-session');
+const SpotifyWebApi = require('spotify-web-api-node');
 const fs = require('fs');
 const { promisify } = require('util');
-const {isSpotify} = require("../api/apiLogin");
-const {connectAPI} = require("../api/apiLogin");
-const SpotifyWebApi = require("spotify-web-api-node");
-const session = require("express-session");
+
 const readFileAsync = promisify(fs.readFile);
 
 // Port d'écoute du serveur
@@ -15,7 +16,7 @@ const hostname = '54.38.241.241';
 const app = express();
 
 // credentials are optional
-var spotifyApi = new SpotifyWebApi({
+const spotifyApi = new SpotifyWebApi({
     clientId: 'a8fbbf0101ef4d06a632dfea2613e5ec',
     clientSecret: '810f530692d948c39933df1250402545',
     redirectUri: 'http://54.38.241.241:9999/callback'
@@ -56,13 +57,131 @@ app.listen(port, hostname, () => {
 
 // Endpoint qui répond à une requête GET
 app.get('/connectAPI', (req, res) => {
-    //connectAPI();
     res.send('http://54.38.241.241:9999/login');
 });
 
 app.get('/login', (req, res) => {
     res.redirect(spotifyApi.createAuthorizeURL(scopes));
 });
+
+app.get('/callback', async (req, res) => {
+    const error = req.query.error;
+    const code = req.query.code;
+
+    if (error) {
+        console.error('Callback Error:', error);
+        res.send(`Callback Error: ${error}`);
+        return;
+    }
+
+    try {
+        const data = await spotifyApi.authorizationCodeGrant(code);
+        const access_token = data.body['access_token'];
+        const refresh_token = data.body['refresh_token'];
+        const expires_in = data.body['expires_in'];
+
+        req.session.access_token = access_token;
+        req.session.refresh_token = refresh_token;
+        req.session.expires_in = Date.now() + expires_in * 1000; // Store expiration time
+
+        spotifyApi.setAccessToken(access_token);
+        spotifyApi.setRefreshToken(refresh_token);
+
+        console.log('Successfully retrieved access token. Expires in', expires_in, 's.');
+
+        const userData = await getUserData();
+        if (!userData) {
+            throw new Error("Failed to retrieve user data");
+        }
+
+        req.session.user = userData.userName;
+        console.log("User's name:", userData.userName);
+        console.log("User's TopTracks:", userData.topTracks);
+
+        res.send('Success! You can now close the window.');
+    } catch (error) {
+        console.error('Error getting Tokens:', error);
+        res.send(`Error getting Tokens: ${error}`);
+    }
+});
+
+// Middleware to check and refresh access token if expired
+app.use(async (req, res, next) => {
+    if (req.session.access_token && Date.now() > req.session.expires_in) {
+        try {
+            spotifyApi.setAccessToken(req.session.access_token);
+            spotifyApi.setRefreshToken(req.session.refresh_token);
+
+            const data = await spotifyApi.refreshAccessToken();
+            req.session.access_token = data.body['access_token'];
+            req.session.expires_in = Date.now() + data.body['expires_in'] * 1000;
+
+            spotifyApi.setAccessToken(req.session.access_token);
+
+            console.log('Access token refreshed:', req.session.access_token);
+        } catch (error) {
+            console.error('Error refreshing access token:', error);
+            return res.status(401).send('Session expired. Please log in again.');
+        }
+    } else if (req.session.access_token) {
+        spotifyApi.setAccessToken(req.session.access_token);
+    }
+    next();
+});
+
+async function getUserData() {
+    try {
+        const meData = await spotifyApi.getMe();
+        const topTracksData = await spotifyApi.getMyTopTracks({ limit: 20 });
+        const userName = meData.body.display_name;
+        const topTracks = topTracksData.body.items.map(track => track.name);
+        return { userName, topTracks };
+    } catch (error) {
+        if (error.statusCode === 401) {
+            // Handle token expiration
+            console.error('The access token expired. Trying to refresh token.');
+        } else {
+            console.error('Error retrieving user data:', error);
+        }
+        return null;
+    }
+}
+
+// Example route that requires a valid access token
+app.get('/play', async (req, res) => {
+    if (!req.session.access_token) {
+        res.status(401).send('User not authenticated');
+        return;
+    }
+
+    try {
+        const data = await readFileAsync('top_tracks.json');
+        const topTracks = JSON.parse(data);
+        const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
+        const trackId = randomTrack.trackId;
+        console.log('trackId:', trackId);
+        const positionMs = (randomTrack.duration_ms) * 0.3;
+        await playSong(trackId, positionMs);
+
+        const trackInfo = {
+            trackName: randomTrack.name,
+            trackArtists: randomTrack.artists,
+            trackAlbumCover: randomTrack.album.coverUrl
+        };
+
+        res.json({ trackInfo });
+    } catch (error) {
+        console.error('Error getting user data:', error);
+        res.status(500).send('Error getting user data');
+    }
+});
+
+app.listen(9999, '54.38.241.241', () =>
+    console.log(
+        'HTTP Server up. Now go to http://54.38.241.241/login or http://54.38.241.241/deezer in your browser.'
+    )
+);
+
 
 // app.get('/callback', (req, res) => {
 //     const error = req.query.error;
@@ -131,138 +250,6 @@ app.get('/login', (req, res) => {
 //             res.send('Error getting Tokens: ${error}');
 //         });
 // });
-
-app.get('/callback', (req, res) => {
-    const error = req.query.error;
-    const code = req.query.code;
-
-    if (error) {
-        console.error('Callback Error:', error);
-        res.send(`Callback Error: ${error}`);
-        return;
-    }
-
-    spotifyApi.authorizationCodeGrant(code)
-        .then(data => {
-            const access_token = data.body['access_token'];
-            const refresh_token = data.body['refresh_token'];
-            const expires_in = data.body['expires_in'];
-
-            req.session.access_token = access_token;
-            req.session.refresh_token = refresh_token;
-            req.session.expires_in = Date.now() + expires_in * 1000; // Store expiration time
-
-            spotifyApi.setAccessToken(access_token);
-            spotifyApi.setRefreshToken(refresh_token);
-
-            console.log('Successfully retrieved access token. Expires in', expires_in, 's.');
-
-            return getUserData();
-        })
-        .then(userData => {
-            if (!userData) {
-                throw new Error("Failed to retrieve user data");
-            }
-
-            req.session.user = userData.userName;
-            console.log("User's name:", userData.userName);
-            console.log("User's TopTracks:", userData.topTracks);
-
-            res.send('Success! You can now close the window.');
-        })
-        .catch(error => {
-            console.error('Error getting Tokens:', error);
-            res.send(`Error getting Tokens: ${error}`);
-        });
-});
-
-// Middleware to check and refresh access token if expired
-app.use(async (req, res, next) => {
-    if (req.session.access_token && Date.now() > req.session.expires_in) {
-        try {
-            spotifyApi.setAccessToken(req.session.access_token);
-            spotifyApi.setRefreshToken(req.session.refresh_token);
-
-            const data = await spotifyApi.refreshAccessToken();
-            req.session.access_token = data.body['access_token'];
-            req.session.expires_in = Date.now() + data.body['expires_in'] * 1000;
-
-            spotifyApi.setAccessToken(req.session.access_token);
-
-            console.log('Access token refreshed:', req.session.access_token);
-        } catch (error) {
-            console.error('Error refreshing access token:', error);
-        }
-    } else if (req.session.access_token) {
-        spotifyApi.setAccessToken(req.session.access_token);
-    }
-    next();
-});
-
-async function getUserData() {
-    try {
-        const meData = await spotifyApi.getMe();
-        const topTracksData = await getMyTopTracks();
-        // const topTracksData = await spotifyApi.getMyTopTracks({ limit: 25, time_range: 'long_term' });
-
-        const userName = meData.body.display_name;
-        const topTracks = topTracksData;
-        // const topTracks = topTracksData.body.items.map(track => track.name);
-
-        return {
-            userName,
-            topTracks,
-        };
-    } catch (error) {
-        console.error('Error retrieving user data:', error);
-        return null;
-    }
-}
-
-app.listen(9999, '54.38.241.241', () =>
-    console.log(
-        'HTTP Server up. Now go to http://54.38.241.241/login or http://54.38.241.241/deezer in your browser.'
-    )
-);
-
-// Example route that requires a valid access token
-app.get('/play', async (req, res) => {
-    if (!req.session.access_token) {
-        res.status(401).send('User not authenticated');
-        return;
-    }
-
-    try {
-        // Play a random track on Spotify
-        // Read the top tracks JSON file
-        const data = await readFileAsync('top_tracks.json');
-        const topTracks = JSON.parse(data);
-
-        // Select a random track from the list
-        const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
-
-        // Play the random track
-        const trackId = randomTrack.trackId;
-        console.log('trackId:', trackId)
-        const positionMs = (randomTrack.duration_ms) * 0.3; // 30% of the track's duration
-        await playSong(trackId, positionMs);
-
-        // Construct track information object
-        const trackInfo = {
-            trackName: randomTrack.name,
-            trackArtists: randomTrack.artists,
-            trackAlbumCover: randomTrack.album.coverUrl
-        };
-
-        // Send response containing both track information and played track information
-        res.json({
-            trackInfo: trackInfo
-        });
-    } catch (error) {
-        console.error('Error getting user data:', error);
-        res.status(500).send('Error getting user data');
-    }
-});
 
 // // Endpoint to play songs
 // app.get('/play', async (req, res) => {
