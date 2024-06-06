@@ -87,6 +87,9 @@ function connectAPI() {
                 console.log('access_token:', access_token);
                 console.log('refresh_token:', refresh_token);
                 console.log('Successfully retrieved access token. Expires in ${expires_in} s.');
+
+                // Fetch user data
+                return getUserData();
             })
 
                 // Once you get the access token, save it to a file
@@ -157,6 +160,13 @@ function connectAPI() {
             //});
 
             .then(userData => {
+                if (!userData) {
+                    throw new Error("Failed to retrieve user data");
+                }
+
+                // Debugging output for userData
+                console.log("Retrieved user data:", userData);
+
                 req.session.user = userData.userName;
                 console.log("User's name:", userData.userName);
                 console.log("User's TopTracks:", userData.topTracks);
@@ -182,6 +192,24 @@ function connectAPI() {
                 res.send('Error getting Tokens: ${error}');
             });
     });
+
+    async function getUserData() {
+        try {
+            const meData = await spotifyApi.getMe();
+            const topTracksData = await spotifyApi.getMyTopTracks();
+
+            const userName = meData.body.display_name;
+            const topTracks = topTracksData.body.items.map(track => track.name);
+
+            return {
+                userName,
+                topTracks,
+            };
+        } catch (error) {
+            console.error('Error retrieving user data:', error);
+            return null;
+        }
+    }
 
     /* ================================================================================ */
 
