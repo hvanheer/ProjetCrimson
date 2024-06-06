@@ -8,7 +8,7 @@ class SongDAO {
     async createSong(song) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            return await db.query(this.connexionManager.connection, 'INSERT INTO songs(songName, songArtists, songAlbum, songReleaseDate) VALUES(?, ?, ?, ?)', [song.songName, song.songArtists, song.songAlbum, song.songReleaseDate]);
+            return await db.query(this.connexionManager.connection, 'INSERT INTO songs(fromSourceID, songName, songArtists, songAlbum, songReleaseDate) VALUES(?, ?, ?, ?, ?)', [song.fromSourceID, song.songName, song.songArtists, song.songAlbum, song.songReleaseDate]);
         } catch (err) {
             throw err;
         }
