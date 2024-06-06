@@ -1,12 +1,11 @@
 class GameRoomsModel {
 
-    constructor(connexion_code, numberOfPlayers, state, numberOfRounds, currentRound){
+    constructor(){
         this.id = 0;
-        this.connexion_code = connexion_code;
-        this.numberOfPlayers= numberOfPlayers;
-        this.state = state;
-        this.numberOfRounds = numberOfRounds;
-        this.currentRound = currentRound;
+        this.numberOfPlayers= 0;
+        this.state = false;
+        this.numberOfRounds = 0;
+        this.currentRound = 0;
         this.codeAleatoire = 0;
     }
 }
