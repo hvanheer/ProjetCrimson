@@ -15,7 +15,7 @@ const hostname = '54.38.241.241';
 
 const app = express();
 
-// credentials are optional
+// Spotify API credentials
 const spotifyApi = new SpotifyWebApi({
     clientId: 'a8fbbf0101ef4d06a632dfea2613e5ec',
     clientSecret: '810f530692d948c39933df1250402545',
@@ -105,9 +105,15 @@ app.get('/callback', async (req, res) => {
     }
 });
 
-// Middleware to check and refresh access token if expired
-app.use(async (req, res, next) => {
-    if (req.session.access_token && Date.now() > req.session.expires_in) {
+// Middleware to ensure user is authenticated
+const ensureAuthenticated = async (req, res, next) => {
+    console.log('Access token:', req.session.access_token);
+    if (!req.session.access_token) {
+        res.status(401).send('User not authenticated');
+        return;
+    }
+
+    if (Date.now() > req.session.expires_in) {
         try {
             spotifyApi.setAccessToken(req.session.access_token);
             spotifyApi.setRefreshToken(req.session.refresh_token);
@@ -121,13 +127,15 @@ app.use(async (req, res, next) => {
             console.log('Access token refreshed:', req.session.access_token);
         } catch (error) {
             console.error('Error refreshing access token:', error);
-            return res.status(401).send('Session expired. Please log in again.');
+            res.status(401).send('Session expired. Please log in again.');
+            return;
         }
-    } else if (req.session.access_token) {
+    } else {
         spotifyApi.setAccessToken(req.session.access_token);
     }
+
     next();
-});
+};
 
 async function getUserData() {
     try {
@@ -137,23 +145,13 @@ async function getUserData() {
         const topTracks = topTracksData.body.items.map(track => track.name);
         return { userName, topTracks };
     } catch (error) {
-        if (error.statusCode === 401) {
-            // Handle token expiration
-            console.error('The access token expired. Trying to refresh token.');
-        } else {
-            console.error('Error retrieving user data:', error);
-        }
+        console.error('Error retrieving user data:', error);
         return null;
     }
 }
 
 // Example route that requires a valid access token
-app.get('/play', async (req, res) => {
-    if (!req.session.access_token) {
-        res.status(401).send('User not authenticated');
-        return;
-    }
-
+app.get('/play', ensureAuthenticated, async (req, res) => {
     try {
         const data = await readFileAsync('top_tracks.json');
         const topTracks = JSON.parse(data);
@@ -181,6 +179,7 @@ app.listen(9999, '54.38.241.241', () =>
         'HTTP Server up. Now go to http://54.38.241.241/login or http://54.38.241.241/deezer in your browser.'
     )
 );
+
 
 
 // app.get('/callback', (req, res) => {

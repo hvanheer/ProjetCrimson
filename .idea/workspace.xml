@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="312be513-050f-44c5-a500-c1872298786f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/src/bridge/spotifyBridge.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/bridge/spotifyBridge.js" afterDir="false" />
-    </list>
+    <list default="true" id="312be513-050f-44c5-a500-c1872298786f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,7 +84,7 @@
       <workItem from="1717496870361" duration="42000" />
       <workItem from="1717499138908" duration="87000" />
       <workItem from="1717583006746" duration="1129000" />
-      <workItem from="1717660496896" duration="7428000" />
+      <workItem from="1717660496896" duration="7750000" />
     </task>
     <servers />
   </component>
