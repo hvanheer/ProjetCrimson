@@ -196,7 +196,7 @@ function connectAPI() {
     async function getUserData() {
         try {
             const meData = await spotifyApi.getMe();
-            const topTracksData = await spotifyApi.getMyTopTracks();
+            const topTracksData = await spotifyApi.getMyTopTracks({ limit: 25, time_range: 'long_term' });
 
             const userName = meData.body.display_name;
             const topTracks = topTracksData.body.items.map(track => track.name);
