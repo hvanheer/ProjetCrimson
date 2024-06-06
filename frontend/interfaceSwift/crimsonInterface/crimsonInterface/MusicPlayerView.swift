@@ -1,3 +1,9 @@
+//
+//  MusicPlayerView.swift
+//  crimsonInterface
+//
+//  Created by Augustin DENIS on 03/04/2024.
+//
 import SwiftUI
 import Foundation
 
@@ -113,4 +119,7 @@ struct MusicPlayerView: View {
             MusicPlayerView()
         }
     }
+}
+#Preview {
+    JoinGameRoomView()
 }

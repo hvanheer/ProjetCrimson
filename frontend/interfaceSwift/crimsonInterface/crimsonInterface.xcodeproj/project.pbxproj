@@ -16,6 +16,7 @@
 		6F385DDC2BAF15CA00FDACE9 /* crimsonInterfaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F385DDB2BAF15CA00FDACE9 /* crimsonInterfaceUITests.swift */; };
 		6F385DDE2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F385DDD2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift */; };
 		6F777FD32BDBD22300B27ED9 /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F777FD22BDBD22300B27ED9 /* MusicPlayerView.swift */; };
+		6FCB0F242C11B5390095FA24 /* JoinGameRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCB0F232C11B5390095FA24 /* JoinGameRoomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		6F385DDB2BAF15CA00FDACE9 /* crimsonInterfaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crimsonInterfaceUITests.swift; sourceTree = "<group>"; };
 		6F385DDD2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crimsonInterfaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6F777FD22BDBD22300B27ED9 /* MusicPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
+		6FCB0F232C11B5390095FA24 /* JoinGameRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGameRoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,11 +102,12 @@
 			isa = PBXGroup;
 			children = (
 				6F19F2E02BB1825A00E59C63 /* Info.plist */,
+				6F385DC42BAF15CA00FDACE9 /* Assets.xcassets */,
 				6F19F2E12BB1828B00E59C63 /* Phosphate.ttc */,
 				6F385DC02BAF15C800FDACE9 /* crimsonInterfaceApp.swift */,
 				6F385DC22BAF15C800FDACE9 /* ContentView.swift */,
-				6F385DC42BAF15CA00FDACE9 /* Assets.xcassets */,
 				6F777FD22BDBD22300B27ED9 /* MusicPlayerView.swift */,
+				6FCB0F232C11B5390095FA24 /* JoinGameRoomView.swift */,
 				6F385DC62BAF15CA00FDACE9 /* Preview Content */,
 			);
 			path = crimsonInterface;
@@ -269,6 +272,7 @@
 				6F777FD32BDBD22300B27ED9 /* MusicPlayerView.swift in Sources */,
 				6F385DC32BAF15C800FDACE9 /* ContentView.swift in Sources */,
 				6F385DC12BAF15C800FDACE9 /* crimsonInterfaceApp.swift in Sources */,
+				6FCB0F242C11B5390095FA24 /* JoinGameRoomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

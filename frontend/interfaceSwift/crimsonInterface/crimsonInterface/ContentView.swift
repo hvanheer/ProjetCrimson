@@ -81,6 +81,14 @@ struct ContentView: View {
                             .cornerRadius(8)
                     }
                     .padding()
+                    NavigationLink(destination: JoinGameRoomView()) {
+                        Text("Rejoindre")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                    .padding()
                 }
             }
             .navigationBarHidden(true)
