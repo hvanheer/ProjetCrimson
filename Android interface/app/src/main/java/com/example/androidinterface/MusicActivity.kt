@@ -47,8 +47,6 @@ class MusicActivity : AppCompatActivity() {
                 playMusic()
             }
         }
-
-        albumCovers()
     }
 
     override fun onDestroy() {
@@ -68,16 +66,23 @@ class MusicActivity : AppCompatActivity() {
                         val jsonResponse = JSONObject(data)
                         val trackInfo = jsonResponse.getJSONObject("trackInfo")
 
+                        val coverUrl = trackInfo.getString("trackAlbumCover")
+                        val bitmap = getBitmapFromURL(coverUrl)
                         val trackName = trackInfo.getString("trackName")
                         val trackArtists = mutableListOf<String>()
                         val artistsArray = trackInfo.getJSONArray("trackArtists")
+
+
                         for (i in 0 until artistsArray.length()) {
                             trackArtists.add(artistsArray.getString(i))
                         }
 
                         withContext(Dispatchers.Main) {
+
+                            albumCover.setImageBitmap(bitmap)
                             textViewMusic.text = trackName
                             textViewArtist.text = trackArtists.joinToString(", ")
+
                             onMusicPlayingStateChanged(true)
                         }
                     } else {
@@ -138,47 +143,49 @@ class MusicActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun albumCovers() {
-        val albumCoverUrl = "http://54.38.241.241:3000/albumCovers"
-
-        coroutineScope.launch(Dispatchers.IO) {
-            try {
-                val connection = URL(albumCoverUrl).openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-
-                try {
-                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                        val inputStream: InputStream = connection.inputStream
-                        val response = inputStream.bufferedReader().use { it.readText() }
-                        val jsonResponse = JSONObject(response)
-                        val trackInfo = jsonResponse.getJSONObject("trackInfo")
-
-                        val coverUrl = trackInfo.getString("trackAlbumCover")
-                        val trackName = trackInfo.getString("trackName")
-                        val trackArtists = trackInfo.getJSONArray("trackArtists").join(", ")
-
-                        val bitmap = getBitmapFromURL(coverUrl)
-
-                        withContext(Dispatchers.Main) {
-                            albumCover.setImageBitmap(bitmap)
-                            textViewMusic.text = trackName
-                            textViewArtist.text = trackArtists
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            showToast("Erreur lors de la requête : ${connection.responseCode}")
-                        }
-                    }
-                } finally {
-                    connection.disconnect()
-                }
-            } catch (e: IOException) {
-                withContext(Dispatchers.Main) {
-                    showToast("Erreur de requête : ${e.localizedMessage}")
-                }
-            }
-        }
-    }
+//    private fun albumCovers() {
+//        val albumCoverUrl = "http://54.38.241.241:3000/albumCovers"
+//
+//        coroutineScope.launch(Dispatchers.IO) {
+//            try {
+//                val connection = URL(albumCoverUrl).openConnection() as HttpURLConnection
+//                connection.requestMethod = "GET"
+//
+//                try {
+//                    if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+//                        val inputStream: InputStream = connection.inputStream
+//                        val response = inputStream.bufferedReader().use { it.readText() }
+//                        val jsonResponse = JSONObject(response)
+//                        val trackInfo = jsonResponse.getJSONObject("trackInfo")
+//
+//                        val coverUrl = trackInfo.getString("trackAlbumCover")
+//                        val trackName = trackInfo.getString("trackName")
+//                        val trackArtists = trackInfo.getJSONArray("trackArtists").join(", ")
+//
+//                        val bitmap = getBitmapFromURL(coverUrl)
+//
+//                        withContext(Dispatchers.Main) {
+//
+//                            albumCover.setImageBitmap(bitmap)
+//                            textViewMusic.text = trackName
+//                            textViewArtist.text = trackArtists
+//
+//                        }
+//                    } else {
+//                        withContext(Dispatchers.Main) {
+//                            showToast("Erreur lors de la requête : ${connection.responseCode}")
+//                        }
+//                    }
+//                } finally {
+//                    connection.disconnect()
+//                }
+//            } catch (e: IOException) {
+//                withContext(Dispatchers.Main) {
+//                    showToast("Erreur de requête : ${e.localizedMessage}")
+//                }
+//            }
+//        }
+//    }
 
     private fun getBitmapFromURL(src: String): Bitmap? {
         return try {
@@ -188,6 +195,7 @@ class MusicActivity : AppCompatActivity() {
             connection.connect()
             val input: InputStream = connection.inputStream
             BitmapFactory.decodeStream(input)
+
         } catch (e: IOException) {
             e.printStackTrace()
             null

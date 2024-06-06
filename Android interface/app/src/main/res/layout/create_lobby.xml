@@ -22,7 +22,7 @@
         android:id="@+id/textViewLobby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="176dp"
         android:fontFamily="@font/phosphate"
         android:text="CRIMSON"
         android:textColor="@android:color/white"
@@ -36,21 +36,21 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="292dp"
+        android:layout_marginTop="340dp"
         android:text="Créer un lobby :"
         android:textColor="@android:color/white"
         android:textSize="25sp"
         android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextIdLobby"
         android:layout_width="360dp"
         android:layout_height="51dp"
-        android:layout_marginTop="404dp"
+        android:layout_marginTop="452dp"
         android:background="@drawable/background_rounded"
         android:fontFamily="@font/helvetica"
         android:gravity="center"
@@ -59,15 +59,16 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonCreateLobby"
         android:layout_width="219dp"
         android:layout_height="47dp"
-        android:layout_marginTop="572dp"
+        android:layout_marginTop="592dp"
         android:backgroundTint="@color/purple"
         android:fontFamily="@font/helvetica"
         android:padding="10dp"
@@ -75,8 +76,8 @@
         android:textAllCaps="false"
         android:textSize="13sp"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
