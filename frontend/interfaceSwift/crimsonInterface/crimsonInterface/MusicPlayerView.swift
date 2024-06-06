@@ -4,25 +4,43 @@ import Foundation
 struct MusicPlayerView: View {
     @State private var isPlaying = false // État de lecture
     @State private var playbackProgress: Double = 0.5 // Progression de la lecture
-    
     @State private var trackName: String = "Loading..." // Nom de la piste musicale
     @State private var artistName: String = "Loading..." // Nom de l'artiste
-    @State private var albumArtworkName: String = "default_album_cover" // Nom de l'image de la pochette de l'album
+    @State private var albumArtworkURL: URL? // URL de la pochette de l'album
     
     var body: some View {
         NavigationView {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color(hex: 0x660033), Color(hex: 0x0066CC)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
-                
+                    .overlay(
+                                        VStack {
+                                            Text("Now Playing")
+                                                .font(.custom("Phosphate", size: 35))
+                                                .foregroundColor(.white)
+                                                .frame(maxHeight: .infinity, alignment: .topLeading)
+                                                .padding(.top)
+                                            Spacer()
+                                        },
+                                        alignment: .top
+                                    )
                 VStack(spacing: 20) {
                     // Image de la pochette de l'album
-                    Image(albumArtworkName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 200, height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(radius: 10)
+                    if let albumArtworkURL = albumArtworkURL {
+                        AsyncImage(url: albumArtworkURL) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 350, height: 350)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 10)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    } else {
+                        ProgressView()
+                            .frame(width: 350, height: 350)
+                    }
                     
                     // Informations sur la piste musicale
                     Text(trackName)
@@ -36,15 +54,15 @@ struct MusicPlayerView: View {
                     
                     // Barre de progression Apple Music style
                     AppleMusicProgressBar(value: $playbackProgress)
-                    
                     // Bouton de lecture/pause
                     Button(action: {
                         if isPlaying {
-                            crimsonInterfaceApp.pauseMusic()
+                            crimsonInterfaceApp.pauseMusic()// Mettre en pause la musique
                         } else {
-                            crimsonInterfaceApp.playMusic { track, artists in
+                            crimsonInterfaceApp.playMusic { track, artist, albumArtworkURL in
                                 self.trackName = track
-                                self.artistName = artists.joined(separator: ", ")
+                                self.artistName = artist
+                                self.albumArtworkURL = albumArtworkURL
                             }
                         }
                         self.isPlaying.toggle() // Inverse l'état de lecture

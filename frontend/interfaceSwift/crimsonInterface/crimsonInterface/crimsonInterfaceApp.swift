@@ -58,7 +58,7 @@ extension crimsonInterfaceApp {
     
     
     
-    static func playMusic(completion: @escaping (String, [String]) -> Void) {
+    static func playMusic(completion: @escaping (String, String, URL?) -> Void) {
             guard let url = URL(string: "http://54.38.241.241:3000/play") else { return }
             
             URLSession.shared.dataTask(with: url) { data, response, error in
@@ -77,9 +77,12 @@ extension crimsonInterfaceApp {
                                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                                    let trackInfo = json["trackInfo"] as? [String: Any],
                                    let trackName = trackInfo["trackName"] as? String,
-                                   let trackArtists = trackInfo["trackArtists"] as? [String] {
+                                   let trackArtists = trackInfo["trackArtists"] as? [String],
+                                   let trackAlbumCoverURLString = trackInfo["trackAlbumCover"] as? String,
+                                   let trackAlbumCoverURL = URL(string: trackAlbumCoverURLString) {
+                                    let artistName = trackArtists.joined(separator: ", ")
                                     DispatchQueue.main.async {
-                                        completion(trackName, trackArtists)
+                                        completion(trackName, artistName, trackAlbumCoverURL)
                                     }
                                 }
                             } catch {
