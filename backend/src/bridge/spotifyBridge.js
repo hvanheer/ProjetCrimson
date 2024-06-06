@@ -38,6 +38,7 @@ app.get('/play', async (req, res) => {
 
             // Play the random track
             const trackId = randomTrack.trackId;
+            console.log('trackId:', trackId)
             const positionMs = (randomTrack.duration_ms) * 0.3; // 30% of the track's duration
             await playSong(trackId, positionMs);
 

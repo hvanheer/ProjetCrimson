@@ -114,7 +114,7 @@ function connectAPI() {
                 console.log('refresh_token:', refresh_token);
 
                 console.log(
-                    `Sucessfully retreived access token. Expires in ${expires_in} s.`
+                    `Sucessfully retrieved access token. Expires in ${expires_in} s.`
                 );
                 res.send('Success! You can now close the window.');
                 isSpotify = true;
