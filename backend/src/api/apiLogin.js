@@ -185,7 +185,7 @@ function connectAPI() {
                     } catch (error) {
                         console.error('Error refreshing access token:', error);
                     }
-                }, (expires_in / 2) * 1000);
+                }, (req.session.expires_in / 2) * 1000);
             })
             .catch(error => {
                 console.error('Error getting Tokens:', error);
