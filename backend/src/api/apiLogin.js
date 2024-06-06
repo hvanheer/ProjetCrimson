@@ -1,5 +1,6 @@
 var SpotifyWebApi = require('spotify-web-api-node');
 const express = require('express')
+const session = require('express-session')
 const axios = require('axios');
 const { getUserName, getMyTopTracks, getUserData} = require('../api/apiFunctions');
 const fs = require('fs')
@@ -11,6 +12,21 @@ let isLoggedIn = false;
 let isSpotify = true;
 
 // This file is copied from: https://github.com/thelinmichael/spotify-web-api-node/blob/master/examples/tutorial/00-get-access-token.js
+
+const app = express();
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+    clientId: 'a8fbbf0101ef4d06a632dfea2613e5ec',
+    clientSecret: '810f530692d948c39933df1250402545',
+    redirectUri: 'http://54.38.241.241:9999/callback'
+});
+
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 const scopes = [
     'ugc-image-upload',
@@ -34,14 +50,6 @@ const scopes = [
     'user-follow-modify'
 ];
 
-// credentials are optional
-var spotifyApi = new SpotifyWebApi({
-    clientId: 'a8fbbf0101ef4d06a632dfea2613e5ec',
-    clientSecret: '810f530692d948c39933df1250402545',
-    redirectUri: 'http://54.38.241.241:9999/callback'
-});
-
-const app = express();
 
 function connectAPI() {
     app.get('/login', (req, res) => {
@@ -60,24 +68,38 @@ function connectAPI() {
             return;
         }
 
-        spotifyApi
-            .authorizationCodeGrant(code)
+        spotifyApi.authorizationCodeGrant(code)
             .then(async data => {
                 const access_token = data.body['access_token'];
                 const refresh_token = data.body['refresh_token'];
                 const expires_in = data.body['expires_in'];
 
+                // Save tokens in session
+                req.session.access_token = access_token;
+                req.session.refresh_token = refresh_token;
+                req.session.expires_in = expires_in;
+                req.session.isSpotify = true;
+
+                // Save access token to use it later
+                spotifyApi.setAccessToken(access_token);
+                spotifyApi.setRefreshToken(refresh_token);
+
+                console.log('access_token:', access_token);
+                console.log('refresh_token:', refresh_token);
+                console.log('Successfully retrieved access token. Expires in ${expires_in} s.');
+            })
+
                 // Once you get the access token, save it to a file
-                fs.writeFileSync('token.txt', access_token);
+                //fs.writeFileSync('token.txt', access_token);
 
-                getUserData()
-                    .then(userData => {
+                //getUserData()
+                    //.then(userData => {
                         // Access the username from userData
-                        const thisUserName = userData.userName;
-                        console.log("User's name:", thisUserName);
+                        //const thisUserName = userData.userName;
+                        //console.log("User's name:", thisUserName);
 
-                        const thisTopTracks = userData.topTracks;
-                        console.log("User's TopTracks:", thisTopTracks);
+                        //const thisTopTracks = userData.topTracks;
+                        //console.log("User's TopTracks:", thisTopTracks);
 
                         // Assuming userModel constructor takes two arguments: name and topTracks
 // const createdUser = new userModel(thisUserName, thisTopTracks);
@@ -101,37 +123,63 @@ function connectAPI() {
 // })
 // .catch(error => {
 //     console.error("Error:", error);
-                    });
+                    //});
 
 
-                isLoggedIn = true;
-                console.log("The user is logged in:", isLoggedIn);
+                //isLoggedIn = true;
+                //console.log("The user is logged in:", isLoggedIn);
 
-                spotifyApi.setAccessToken(access_token);
-                spotifyApi.setRefreshToken(refresh_token);
+                //spotifyApi.setAccessToken(access_token);
+                //spotifyApi.setRefreshToken(refresh_token);
 
-                console.log('access_token:', access_token);
-                console.log('refresh_token:', refresh_token);
+                //console.log('access_token:', access_token);
+                //console.log('refresh_token:', refresh_token);
 
-                console.log(
-                    `Sucessfully retrieved access token. Expires in ${expires_in} s.`
-                );
+                //console.log(
+                    //`Sucessfully retrieved access token. Expires in ${expires_in} s.`
+                //);
+                //res.send('Success! You can now close the window.');
+                //isSpotify = true;
+                //console.log("isSpotify:", isSpotify);
+
+                //setInterval(async () => {
+                    //const data = await spotifyApi.refreshAccessToken();
+                    //const access_token = data.body['access_token'];
+
+                    //console.log('The access token has been refreshed!');
+                    //console.log('access_token:', access_token);
+                    //spotifyApi.setAccessToken(access_token);
+                //}, expires_in / 2 * 1000);
+            //})
+            //.catch(error => {
+                //console.error('Error getting Tokens:', error);
+                //res.send(`Error getting Tokens: ${error}`);
+            //});
+
+            .then(userData => {
+                req.session.user = userData.userName;
+                console.log("User's name:", userData.userName);
+                console.log("User's TopTracks:", userData.topTracks);
+
                 res.send('Success! You can now close the window.');
-                isSpotify = true;
-                console.log("isSpotify:", isSpotify);
 
+                // Refresh the access token before it expires
                 setInterval(async () => {
-                    const data = await spotifyApi.refreshAccessToken();
-                    const access_token = data.body['access_token'];
-
-                    console.log('The access token has been refreshed!');
-                    console.log('access_token:', access_token);
-                    spotifyApi.setAccessToken(access_token);
-                }, expires_in / 2 * 1000);
+                    try {
+                        const data = await spotifyApi.refreshAccessToken();
+                        const newAccessToken = data.body['access_token'];
+                        console.log('The access token has been refreshed!');
+                        console.log('access_token:', newAccessToken);
+                        spotifyApi.setAccessToken(newAccessToken);
+                        req.session.access_token = newAccessToken;
+                    } catch (error) {
+                        console.error('Error refreshing access token:', error);
+                    }
+                }, (expires_in / 2) * 1000);
             })
             .catch(error => {
                 console.error('Error getting Tokens:', error);
-                res.send(`Error getting Tokens: ${error}`);
+                res.send('Error getting Tokens: ${error}');
             });
     });
 
