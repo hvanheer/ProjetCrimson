@@ -7,7 +7,7 @@ class GameRoomService {
 
     async createGameRoom(gameRoom) {
         try {
-            gameRoom.codeAleatoire = this.generateRandomCode();
+            gameRoom.codeAleatoire = await this.generateRandomCode();
             return await this.gameRoomDAO.createGameRoom(gameRoom)                ;
         } catch (err) {
             throw err;
@@ -40,21 +40,23 @@ class GameRoomService {
 
     async generateRandomCode() {
         let confirmationUnique = false;
+        let gameRooms = [];
         let code = '';
         try {
-            let gameRooms = await this.gameRoomDAO.findAllGameRoom();
+            gameRooms = await this.gameRoomDAO.findAllGameRoom();
             while (confirmationUnique === false) {
-                let code = '';
+                code = '';
                 for (let i = 0; i < 5; i++) {
-                    code += Math.floor(Math.random() * 10);
+                    code += Math.floor(Math.random() * 10).toString();
                 }
                 confirmationUnique = !gameRooms.some(room => room.codeAleatoire === code);
+
             }
         } catch (err) {
             throw err;
         }
 
-        return code;
+        return parseInt(code);
     }
 }
 

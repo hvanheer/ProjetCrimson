@@ -18,8 +18,7 @@ class SongPlayerLinkDAO {
     async findSongPlayerLinkByPlayerId(playerID) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const songPlayerLinks = await db.query(this.connexionManager.connection, 'SELECT * FROM songs_players_link WHERE playerID = ?', [playerID]);
-            return songPlayerLinks[0];
+            return await db.query(this.connexionManager.connection, 'SELECT * FROM songs_players_link WHERE playerID = ?', [playerID]);
         } catch (err) {
             throw err;
         }
@@ -27,8 +26,7 @@ class SongPlayerLinkDAO {
     async findSongPlayerLinkBySongId(songID) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const songPlayerLinks = await db.query(this.connexionManager.connection, 'SELECT * FROM songs_players_link WHERE songID = ?', [songID]);
-            return songPlayerLinks[0];
+            return await db.query(this.connexionManager.connection, 'SELECT * FROM songs_players_link WHERE songID = ?', [songID]);
         } catch (err) {
             throw err;
         }

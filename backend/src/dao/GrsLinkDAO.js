@@ -17,8 +17,7 @@ class GrsLinkDAO {
     async findGrsLinkByGameRoomId(gameRoomID) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const grsLinks = await db.query(this.connexionManager.connection, 'SELECT * FROM grslink WHERE roomGameID = ?', [gameRoomID]);
-            return grsLinks[0];
+            return await db.query(this.connexionManager.connection, 'SELECT * FROM grslink WHERE gameRoomID = ?', [gameRoomID]);
         } catch (err) {
             throw err;
         }
@@ -26,8 +25,7 @@ class GrsLinkDAO {
     async findGrsLinkBySongId(songID) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            const grsLinks = await db.query(this.connexionManager.connection, 'SELECT * FROM grslink WHERE songID = ?', [songID]);
-            return grsLinks[0];
+            return await db.query(this.connexionManager.connection, 'SELECT * FROM grslink WHERE songID = ?', [songID]);
         } catch (err) {
             throw err;
         }
