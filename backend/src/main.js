@@ -12,6 +12,7 @@ const GrsLinkModel = require('./model/GrsLinkModel');
 const GrsLinkService = require('./service/GrsLinkService');
 const SongPlayerLinkModel = require('./model/SongPlayerLinkModel');
 const SongPlayerLinkService = require('./service/SongPlayerLinkService');
+const GameService = require('./service/GameService')
 
 async function fetchAllUsers() {
     try {
@@ -36,14 +37,14 @@ async function fetchAllUsers() {
 testsDB();
 
 
-
 function testsDB() {
     // testGameRooms();
     // testSong();
     // testPlayer();
-    testGrpLink()
+    // testGrpLink()
     // testGrsLink();
     // testSongPlayerLink();
+    testGameService();
 }
 
 function testGameRooms() {
@@ -66,8 +67,6 @@ async function testUpdateGr(gameRoomService) {
     }
 }
 
-
-
 function testCreationGameRoom(gameRoom, gameRoomService) {
         try{
         gameRoomService.createGameRoom(gameRoom);
@@ -75,6 +74,7 @@ function testCreationGameRoom(gameRoom, gameRoomService) {
         console.log(err)
     }
 }
+
 
 
 async function testListGameRoom(gameRoom, gameRoomService) {
@@ -87,6 +87,7 @@ async function testListGameRoom(gameRoom, gameRoomService) {
         console.log(err)
     }
 }
+
 
 function testSong() {
     const song = new SongModel(12, 'NomMusique', 'Bob', 'Boby', new Date(2024,2,2));
@@ -183,6 +184,7 @@ async function testListGrpLinks(grpLinkService) {
         console.error('Error fetching all GrpLinks:', err);
     }
 }
+
 function testGrsLink() {
     const game_room_id = 3;
     const songs_id = 1;
@@ -195,7 +197,6 @@ function testGrsLink() {
     // testFindGrsLinkBySongId(2, grsLinkService);
     // testListGrsLinks(grsLinkService);
 }
-
 async function testCreateGrsLink(grsLink, grsLinkService) {
     try {
         const createdGrsLink = await grsLinkService.createGrsLink(grsLink);
@@ -279,4 +280,15 @@ async function testListSongPlayerLinks(songPlayerLinkService) {
     } catch (err) {
         console.error('Error fetching all SongPlayerLinks:', err);
     }
+}
+
+function testGameService() {
+    let gameService = new GameService();
+    try {
+        // gameService.creationGameRoomParLePlayer(7, 15);
+        gameService.startGame(6,12);
+    }catch (e) {
+        console.log(e)
+    }
+
 }
