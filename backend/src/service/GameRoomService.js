@@ -8,7 +8,14 @@ class GameRoomService {
     async createGameRoom(gameRoom) {
         try {
             gameRoom.codeAleatoire = await this.generateRandomCode();
-            return await this.gameRoomDAO.createGameRoom(gameRoom)                ;
+            return await this.gameRoomDAO.createGameRoom(gameRoom);
+        } catch (err) {
+            throw err;
+        }
+    }
+    async updateGameRoom(newGameRoom) {
+        try {
+            return await this.gameRoomDAO.updateGameRoom(newGameRoom) ;
         } catch (err) {
             throw err;
         }

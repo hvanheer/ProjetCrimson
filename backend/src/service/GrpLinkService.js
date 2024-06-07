@@ -1,12 +1,17 @@
 const grpLinkDAO = require('../dao/GrpLinkDAO');
+const GameRoomService = require('./GameRoomService')
 
 class GrpLinkService {
     constructor() {
         this.grpLinkDAO = new grpLinkDAO();
+        this.gameRoomService = new GameRoomService();
     }
 
     async createGrpLink(grpLink) {
         try {
+            let gameRoom = await this.gameRoomService.findGameRoomById(grpLink.game_room_id);
+            gameRoom.numberOfPlayers += 1;
+            await this.gameRoomService.updateGameRoom(gameRoom);
             return await this.grpLinkDAO.createGrpLink(grpLink);
         } catch (err) {
             throw err;

@@ -50,7 +50,20 @@ function testGameRooms() {
     const gameRoom = new GameRoomModel();
     const gameRoomService = new GameRoomService();
     // testCreationGameRoom(gameRoom, gameRoomService);
-    testListGameRoom(gameRoom, gameRoomService);
+    // testListGameRoom(gameRoom, gameRoomService);
+    testUpdateGr(gameRoomService);
+}
+
+async function testUpdateGr(gameRoomService) {
+    try{
+        let gameRoom = await gameRoomService.findGameRoomById(2);
+        gameRoom.numberOfPlayers +=1;
+        gameRoom.numberOfRounds = 10;
+        console.log(gameRoom);
+        gameRoomService.updateGameRoom(gameRoom);
+    }catch (e) {
+        console.log(e)
+    }
 }
 
 
@@ -122,16 +135,16 @@ async function testListPlayers(playerService) {
 
 function testGrpLink() {
     const player_id = 7;
-    const game_room_id = 3;
+    const game_room_id = 2;
     const playerPoints = 0;
     const playerRank = 0;
     const guessedSongs = "song";
     const averageReactionTime = 2.5;
     const grpLink = new GrpLinkModel(player_id, game_room_id, playerPoints, playerRank, guessedSongs, averageReactionTime);
     const grpLinkService = new GrpLinkService();
-    // testCreateGrpLink(grpLink, grpLinkService);
-    testFindGrpLinkByGameRoomId(2, grpLinkService);
-    testFindGrpLinkByPlayerId(7, grpLinkService);
+    testCreateGrpLink(grpLink, grpLinkService);
+    // testFindGrpLinkByGameRoomId(2, grpLinkService);
+    // testFindGrpLinkByPlayerId(7, grpLinkService);
     // testListGrpLinks(grpLinkService);
 }
 

@@ -14,6 +14,18 @@ class GameRoomDAO {
         }
     }
 
+    async updateGameRoom(newGameRoom) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const query = 'UPDATE gamerooms SET numberOfPlayers = ?, state = ?, numberOfRounds = ?, currentRound = ?, codeAleatoire = ? WHERE gameRoomID = ?';
+            const params = [newGameRoom.numberOfPlayers, newGameRoom.state, newGameRoom.numberOfRounds, newGameRoom.currentRound, newGameRoom.codeAleatoire, newGameRoom.gameRoomID];
+            return await db.query(this.connexionManager.connection, query, params);
+        } catch (err) {
+            console.error('Error updating game room:', err);
+            throw err;
+        }
+    }
+
     async findGameRoomById(gameRoomID) {
         try {
             const db = await this.connexionManager.getDbConnection();
