@@ -13,7 +13,14 @@ class UserService {
             throw err;
         }
     }
-
+    async deleteUser(userID) {
+        try {
+            const deletedUser = await this.userDAO.deleteUser(userID);
+            return deletedUser;
+        } catch (err) {
+            throw err;
+        }
+    }
     async findUserById(userID) {
         try {
             const user = await this.userDAO.findUserById(userID);

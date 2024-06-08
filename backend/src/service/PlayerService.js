@@ -12,7 +12,13 @@ class PlayerService {
             throw err;
         }
     }
-
+    async deletePlayer(playerID) {
+        try {
+            return await this.playerDAO.deletePlayer(playerID);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findPlayerById(playerID) {
         try {
             return await this.playerDAO.findPlayerById(playerID);

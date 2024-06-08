@@ -15,6 +15,15 @@ class UserDAO {
             throw err;
         }
     }
+    async deleteUser(userID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const result = await db.query(this.connexionManager.connection, 'DELETE FROM players WHERE ID_user = ?', [userID]);
+            return result.affectedRows > 0;
+        } catch (err) {
+            throw err;
+        }
+    }
 
     async findUserById(userID) {
         try {

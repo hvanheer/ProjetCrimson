@@ -12,7 +12,13 @@ class SongPlayerLinkService {
             throw err;
         }
     }
-
+    async deleteSongPlayerLink(playerID, songID) {
+        try {
+            return await this.songPlayerLinkDAO.deleteSongPlayerLink(playerID, songID);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findSongPlayerLinkByPlayerId(playerID) {
         try {
             return await this.songPlayerLinkDAO.findSongPlayerLinkByPlayerId(playerID);

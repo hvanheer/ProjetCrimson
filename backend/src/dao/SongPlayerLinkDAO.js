@@ -14,6 +14,15 @@ class SongPlayerLinkDAO {
             throw err;
         }
     }
+    async deleteSongPlayerLink(playerID, songID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const result = await db.query(this.connexionManager.connection, 'DELETE FROM songs_players_link WHERE playerID = ? AND songID = ?', [playerID, songID]);
+            return result.affectedRows > 0;
+        } catch (err) {
+            throw err;
+        }
+    }
 
     async findSongPlayerLinkByPlayerId(playerID) {
         try {

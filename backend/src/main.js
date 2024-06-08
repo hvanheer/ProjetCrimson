@@ -38,13 +38,13 @@ testsDB();
 
 
 function testsDB() {
-    // testGameRooms();
-    // testSong();
+    //testGameRooms();
+    testSong();
     // testPlayer();
     // testGrpLink()
     // testGrsLink();
     // testSongPlayerLink();
-    testGameService();
+    //testGameService();
 }
 
 function testGameRooms() {
@@ -52,9 +52,16 @@ function testGameRooms() {
     const gameRoomService = new GameRoomService();
     // testCreationGameRoom(gameRoom, gameRoomService);
     // testListGameRoom(gameRoom, gameRoomService);
-    testUpdateGr(gameRoomService);
+    //testUpdateGr(gameRoomService);
+    //testDeleteGR(gameRoom, gameRoomService)
 }
-
+async function testDeleteGR(gameRoom, gameRoomService) {
+    try{
+        gameRoomService.deleteGameRoom(6);
+    }catch (err) {
+        console.log(err)
+    }
+}
 async function testUpdateGr(gameRoomService) {
     try{
         let gameRoom = await gameRoomService.findGameRoomById(2);
@@ -70,7 +77,7 @@ async function testUpdateGr(gameRoomService) {
 function testCreationGameRoom(gameRoom, gameRoomService) {
         try{
         gameRoomService.createGameRoom(gameRoom);
-    }catch (e) {
+    }catch (err) {
         console.log(err)
     }
 }
@@ -93,8 +100,14 @@ function testSong() {
     const song = new SongModel(12, 'NomMusique', 'Bob', 'Boby', new Date(2024,2,2));
     const songService = new SongService();
     // testCreateSong(song, songService);
-    testListSong(songService);
+    //testListSong(songService);
+    testfindBySourceID(songService)
 
+}
+
+async function testfindBySourceID(songService){
+    const songs = await songService.findBySourceId(4)
+    console.log(songs)
 }
 
 function testCreateSong(song, songService) {

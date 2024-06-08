@@ -13,6 +13,24 @@ class SongDAO {
             throw err;
         }
     }
+    async deleteSong(songID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const result = await db.query(this.connexionManager.connection, 'DELETE FROM songs WHERE songID = ?', [songID]);
+            return result.affectedRows > 0;
+        } catch (err) {
+            throw err;
+        }
+    }
+    async findBySourceID(fromSourceID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const songs = await db.query(this.connexionManager.connection, 'SELECT * FROM songs WHERE fromSourceID = ?', [fromSourceID]);
+            return songs;
+        } catch (err) {
+            throw err;
+        }
+    }
 
     async findSongById(songID) {
         try {

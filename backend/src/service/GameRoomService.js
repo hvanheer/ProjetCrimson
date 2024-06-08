@@ -28,7 +28,13 @@ class GameRoomService {
             throw err;
         }
     }
-
+    async findGameRoomByCodeAleatoire(codeAleatoire) {
+        try {
+            return await this.gameRoomDAO.findGameRoomByCodeAleatoire(codeAleatoire);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findAllGameRoom() {
         try {
             return await this.gameRoomDAO.findAllGameRoom();
@@ -36,7 +42,13 @@ class GameRoomService {
             throw err;
         }
     }
-
+    async deleteGameRoom(gameRoomID) {
+        try {
+            return await this.gameRoomDAO.deleteGameRoom(gameRoomID);
+        } catch (err) {
+            throw err;
+        }
+    }
     async closeDBConnection() {
         try {
             await this.gameRoomDAO.closeDBConnection();

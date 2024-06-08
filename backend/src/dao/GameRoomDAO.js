@@ -27,11 +27,29 @@ class GameRoomDAO {
             throw err;
         }
     }
+    async deleteGameRoom(gameRoomID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const result = await db.query(this.connexionManager.connection, 'DELETE FROM gamerooms WHERE gameRoomID = ?', [gameRoomID]);
+            return result.affectedRows > 0;
+        } catch (err) {
+            throw err;
+        }
+    }
 
     async findGameRoomById(gameRoomID) {
         try {
             const db = await this.connexionManager.getDbConnection();
             const gameRooms = await db.query(this.connexionManager.connection, 'SELECT * FROM gamerooms WHERE gameRoomID = ?', [gameRoomID]);
+            return gameRooms[0];
+        } catch (err) {
+            throw err;
+        }
+    }
+    async findGameRoomByCodeAleatoire(codeAleatoire) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const gameRooms = await db.query(this.connexionManager.connection, 'SELECT * FROM gamerooms WHERE codeAleatoire = ?', [codeAleatoire]);
             return gameRooms[0];
         } catch (err) {
             throw err;

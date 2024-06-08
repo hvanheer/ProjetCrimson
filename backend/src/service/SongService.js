@@ -12,7 +12,20 @@ class SongService {
             throw err;
         }
     }
-
+    async deleteSong(songID) {
+        try {
+            return await this.songDAO.deleteSong(songID);
+        } catch (err) {
+            throw err;
+        }
+    }
+    async findBySourceId(fromSourceID) {
+        try {
+            return await this.songDAO.findBySourceID(fromSourceID);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findSongById(songID) {
         try {
             return await this.songDAO.findSongById(songID);
