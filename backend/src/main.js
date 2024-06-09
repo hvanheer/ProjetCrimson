@@ -41,7 +41,7 @@ function testsDB() {
     //testGameRooms();
     //testSong();
     // testPlayer();
-    //testGrpLink()
+    // testGrpLink()
     // testGrsLink();
     // testSongPlayerLink();
     testGameService();
@@ -180,22 +180,22 @@ async function testListPlayers(playerService) {
 }
 
 function testGrpLink() {
-    const player_id = 7;
-    const game_room_id = 2;
+    const player_id = 9;
+    const game_room_id = 6;
     const playerPoints = 0;
     const playerRank = 0;
     const guessedSongs = "song";
-    const gameRoomID = 1
-    const playerID = 8
+    const gameRoomID = 6
+    const playerID = 9
     const averageReactionTime = 2.5;
     const grpLink = new GrpLinkModel(player_id, game_room_id, playerPoints, playerRank, guessedSongs, averageReactionTime);
     const grpLinkService = new GrpLinkService();
-    //testCreateGrpLink(grpLink, grpLinkService);
+    // testCreateGrpLink(grpLink, grpLinkService);
     // testFindGrpLinkByGameRoomId(2, grpLinkService);
     // testFindGrpLinkByPlayerId(7, grpLinkService);
     // testListGrpLinks(grpLinkService);
-    testDeleteGrpLink(gameRoomID, playerID,grpLinkService)
-    //testUpdateGrpLink(gameRoomID, playerID, updatedGrpLink,grpLinkService)
+    // testDeleteGrpLink(gameRoomID, playerID,grpLinkService)
+    testUpdateGrpLink(gameRoomID, playerID, updatedGrpLink,grpLinkService)
 }
 
 async function testUpdateGrpLink(gameRoomID, playerID, updatedGrpLink,grpLinkService) {

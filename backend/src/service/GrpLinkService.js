@@ -1,10 +1,11 @@
 const grpLinkDAO = require('../dao/GrpLinkDAO');
 const GameRoomService = require('./GameRoomService')
-
+const PlayerService = require('./PlayerService')
 class GrpLinkService {
     constructor() {
         this.grpLinkDAO = new grpLinkDAO();
         this.gameRoomService = new GameRoomService();
+        this.playerService = new PlayerService();
     }
 
     async createGrpLink(grpLink) {
@@ -12,7 +13,20 @@ class GrpLinkService {
             let gameRoom = await this.gameRoomService.findGameRoomById(grpLink.game_room_id);
             gameRoom.numberOfPlayers += 1;
             await this.gameRoomService.updateGameRoom(gameRoom);
-            return await this.grpLinkDAO.createGrpLink(grpLink);
+            await this.grpLinkDAO.createGrpLink(grpLink);
+
+            let listDesConnexions = []
+            let grpLinks = await this.findGrpLinkByGameRoomId(gameRoom.gameRoomID)
+            for (let i = 0; i < grpLinks.length; i++) {
+                let grpLinkPlayer = grpLinks[i];
+                let player = await this.playerService.findPlayerById(grpLinkPlayer.playerID);
+                listDesConnexions.push({playerID: player.ID_user, playerName: player.user_name});
+            }
+
+            let jsonListeDesConnexions = JSON.stringify(listDesConnexions);
+            console.log(jsonListeDesConnexions);
+            //TODO: renvoyer le json au front
+
         } catch (err) {
             throw err;
         }
@@ -26,7 +40,18 @@ class GrpLinkService {
     }
     async deleteGrpLink(gameRoomID, playerID){
         try {
-            return await this.grpLinkDAO.deleteGrpLink(gameRoomID, playerID);
+            let gameRoom = await this.gameRoomService.findGameRoomById(gameRoomID);
+            await this.grpLinkDAO.deleteGrpLink(gameRoomID, playerID);
+            let listDesConnexions = []
+            let grpLinks = await this.findGrpLinkByGameRoomId(gameRoom.gameRoomID)
+            for (let i = 0; i < grpLinks.length; i++) {
+                let grpLinkPlayer = grpLinks[i];
+                let player = await this.playerService.findPlayerById(grpLinkPlayer.playerID);
+                listDesConnexions.push({playerID: player.ID_user, playerName: player.user_name});
+            }
+
+            let jsonListeDesConnexions = JSON.stringify(listDesConnexions);
+            console.log(jsonListeDesConnexions);
         } catch (err) {
             throw err;
         }
