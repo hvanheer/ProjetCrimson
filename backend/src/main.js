@@ -351,7 +351,7 @@ function testGameService() {
     let gameService = new GameService();
     try {
         // gameService.creationGameRoomParLePlayer(7, 15);
-        gameService.startGame(3185,3);
+        gameService.startGame(3185,2);
     }catch (e) {
         console.log(e)
     }

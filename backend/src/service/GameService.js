@@ -34,6 +34,7 @@ class GameService {
     async startGame(gameRoomCode, numberRoundMax){
         let gameRoomService = new GameRoomService();
         let songPlayerLinkService = new SongPlayerLinkService();
+        let playerService = new PlayerService();
 
         //Initialisaton
 
@@ -81,13 +82,14 @@ class GameService {
             for (let i = 0; i < listOfVotes.length; i++) {
                 let vote = listOfVotes[i];
                 let isVoteJuste = songPlayerLinkList.some(link => link.playerID === vote.voteId);
-
+                let player = await playerService.findPlayerById(vote.playerId);
+                let playerName = player.user_name;
                 if (isVoteJuste) {
-                    listOfResults.push({playerId: vote.playerId, result: 1})
+                    listOfResults.push({playerId: vote.playerId, playerName: playerName, result: 1})
                     this.updateGrpLinkWinner(gameRoom.gameRoomID, vote.playerId);
                 }
                 else {
-                    listOfResults.push({playerId: vote.playerId, result: 0})
+                    listOfResults.push({playerId: vote.playerId, playerName: playerName, result: 0})
                 }
             }
 
