@@ -17,6 +17,7 @@
 		6F385DDE2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F385DDD2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift */; };
 		6F777FD32BDBD22300B27ED9 /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F777FD22BDBD22300B27ED9 /* MusicPlayerView.swift */; };
 		6FCB0F242C11B5390095FA24 /* JoinGameRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCB0F232C11B5390095FA24 /* JoinGameRoomView.swift */; };
+		6FCB0F262C11CCCB0095FA24 /* GameRoomPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCB0F252C11CCCB0095FA24 /* GameRoomPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		6F385DDD2BAF15CA00FDACE9 /* crimsonInterfaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crimsonInterfaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6F777FD22BDBD22300B27ED9 /* MusicPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
 		6FCB0F232C11B5390095FA24 /* JoinGameRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGameRoomView.swift; sourceTree = "<group>"; };
+		6FCB0F252C11CCCB0095FA24 /* GameRoomPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				6F385DC22BAF15C800FDACE9 /* ContentView.swift */,
 				6F777FD22BDBD22300B27ED9 /* MusicPlayerView.swift */,
 				6FCB0F232C11B5390095FA24 /* JoinGameRoomView.swift */,
+				6FCB0F252C11CCCB0095FA24 /* GameRoomPlayer.swift */,
 				6F385DC62BAF15CA00FDACE9 /* Preview Content */,
 			);
 			path = crimsonInterface;
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F777FD32BDBD22300B27ED9 /* MusicPlayerView.swift in Sources */,
+				6FCB0F262C11CCCB0095FA24 /* GameRoomPlayer.swift in Sources */,
 				6F385DC32BAF15C800FDACE9 /* ContentView.swift in Sources */,
 				6F385DC12BAF15C800FDACE9 /* crimsonInterfaceApp.swift in Sources */,
 				6FCB0F242C11B5390095FA24 /* JoinGameRoomView.swift in Sources */,

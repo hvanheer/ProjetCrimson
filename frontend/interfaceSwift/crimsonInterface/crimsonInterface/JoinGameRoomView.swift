@@ -22,14 +22,14 @@ struct JoinGameRoomView: View {
                         .padding(.top, 50)
                     Text("")
                     Text("")
-                    TextField("Entrer votre pseudo", text: $joinCode )
+                    TextField("Code", text: $joinCode )
                         .padding()
                         .background(Color.white)
                         .cornerRadius(8)
                         .padding()
                         .foregroundColor(.black)
-                    NavigationLink(destination: MusicPlayerView()) {
-                        Text("Go to Music Player")
+                    NavigationLink(destination: GameRoomPlayer()) {
+                        Text("Go")
                             .foregroundColor(.white)
                             .padding()
                             .background(Color.blue)
