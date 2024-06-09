@@ -34,6 +34,7 @@ class GameService {
     async startGame(gameRoomCode, numberRoundMax){
         let gameRoomService = new GameRoomService();
         let songPlayerLinkService = new SongPlayerLinkService();
+        let grpLinkService = new GrpLinkService();
         let playerService = new PlayerService();
 
         //Initialisaton
@@ -104,8 +105,19 @@ class GameService {
             gameRoom.currentRound +=1;
             gameRoomService.updateGameRoom(gameRoom);
 
-
         }
+
+        // Envoyer les résultats finaux au front
+        let grpLinkList = await grpLinkService.findGrpLinkByGameRoomId(gameRoom.gameRoomID)
+        let resultatsFinauxList = [];
+        for (let i = 0; i < grpLinkList.length; i++) {
+            let grpLink = grpLinkList[i];
+            let player = await playerService.findPlayerById(grpLink.playerID);
+            resultatsFinauxList.push({playerId: grpLink.playerID, playerName: player.user_name, playerPoints: grpLink.playerPoints, averageReactionTime: grpLink.averageReactionTime})
+        }
+        let jsonResultatsFinaux = JSON.stringify(resultatsFinauxList);
+        console.log(jsonResultatsFinaux);
+        // TODO: faire le passage du json au front
     }
 
     reponseFrontVote(){
