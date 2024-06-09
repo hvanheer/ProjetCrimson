@@ -13,6 +13,17 @@ class SongDAO {
             throw err;
         }
     }
+    async updateSong(updatedSong) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const query = 'UPDATE songs SET fromSourceID = ?, songName = ?, songArtists = ?, songAlbum = ?, songReleaseDate = ? WHERE songID = ?';
+            const params = [updatedSong.fromSourceID, updatedSong.songName, updatedSong.songArtists, updatedSong.songAlbum, updatedSong.songReleaseDate, updatedSong.songID];
+            return await db.query(this.connexionManager.connection, query, params);
+        } catch (err) {
+            console.error('Error updating song:', err);
+            throw err;
+        }
+    }
     async deleteSong(songID) {
         try {
             const db = await this.connexionManager.getDbConnection();

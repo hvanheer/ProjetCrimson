@@ -13,7 +13,28 @@ class GrpLinkDAO {
             throw err;
         }
     }
+    async updateGrpLink(gameRoomID, playerID, updatedGrpLink) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const query = 'UPDATE grplink SET playerPoints = ?, playerRank = ?, guessedSongs = ?, averageReactionTime = ? WHERE gameRoomID = ? AND playerID = ?';
+            const params = [updatedGrpLink.playerPoints, updatedGrpLink.playerRank, updatedGrpLink.guessedSongs, updatedGrpLink.averageReactionTime, gameRoomID, playerID];
+            return await db.query(this.connexionManager.connection, query, params);
+        } catch (err) {
+            console.error('Error updating grpLink:', err);
+            throw err;
+        }
+    }
 
+    async deleteGrpLink(gameRoomID, playerID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            await db.query(this.connexionManager.connection, 'DELETE FROM grplink WHERE gameRoomID = ? AND playerID = ?', [gameRoomID, playerID]);
+            await db.query(this.connexionManager.connection, 'UPDATE gamerooms SET numberOfPlayers = numberOfPlayers - 1 WHERE gameRoomID = ?', [gameRoomID]);
+
+        } catch (err) {
+            throw err;
+        }
+    }
     async findGrpLinkByGameRoomId(gameRoomID) {
         try {
             const db = await this.connexionManager.getDbConnection();

@@ -14,6 +14,17 @@ class PlayerDAO {
             throw err;
         }
     }
+    async updatePlayer(updatedPlayer) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            const query = 'UPDATE players SET user_name = ?, spotify = ?, top25 = ? WHERE ID_user = ?';
+            const top25String = JSON.stringify(updatedPlayer.top25);
+            const params = [updatedPlayer.user_name, updatedPlayer.spotify, top25String, updatedPlayer.ID_user];
+            return await db.query(this.connexionManager.connection, query, params);
+        } catch (err) {
+            throw err;
+        }
+    }
     async deletePlayer(playerID) {
         try {
             const db = await this.connexionManager.getDbConnection();

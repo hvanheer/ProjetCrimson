@@ -13,6 +13,13 @@ class GrsLinkService {
         }
     }
 
+    async deleteGrsLink(gameRoomID, songID) {
+        try {
+            return await this.grsLinkDAO.deleteGrsLink(gameRoomID, songID);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findGrsLinkByGameRoomId(gameRoomID) {
         try {
             return await this.grsLinkDAO.findGrsLinkByGameRoomId(gameRoomID);

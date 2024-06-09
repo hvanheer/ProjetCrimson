@@ -12,6 +12,13 @@ class SongService {
             throw err;
         }
     }
+    async updateSong(updatedSong) {
+        try {
+            return await this.songDAO.updateSong(updatedSong);
+        } catch (err) {
+            throw err;
+        }
+    }
     async deleteSong(songID) {
         try {
             return await this.songDAO.deleteSong(songID);

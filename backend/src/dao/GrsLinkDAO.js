@@ -13,7 +13,14 @@ class GrsLinkDAO {
             throw err;
         }
     }
-
+    async deleteGrsLink(gameRoomID, songID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            return await db.query(this.connexionManager.connection, 'DELETE FROM grslink WHERE gameRoomID = ? AND songID = ?', [gameRoomID, songID]);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findGrsLinkByGameRoomId(gameRoomID) {
         try {
             const db = await this.connexionManager.getDbConnection();

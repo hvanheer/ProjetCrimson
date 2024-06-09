@@ -17,7 +17,20 @@ class GrpLinkService {
             throw err;
         }
     }
-
+    async updateGrpLink(gameRoomID, playerID, updatedGrpLink){
+        try {
+            return await this.grpLinkDAO.updateGrpLink(gameRoomID, playerID, updatedGrpLink);
+        } catch (err) {
+            throw err;
+        }
+    }
+    async deleteGrpLink(gameRoomID, playerID){
+        try {
+            return await this.grpLinkDAO.deleteGrpLink(gameRoomID, playerID);
+        } catch (err) {
+            throw err;
+        }
+    }
     async findGrpLinkByGameRoomId(gameRoomID) {
         try {
             return await this.grpLinkDAO.findGrpLinkByGameRoomId(gameRoomID);

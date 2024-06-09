@@ -19,6 +19,14 @@ class PlayerService {
             throw err;
         }
     }
+
+    async updatePlayer(updatedPlayer) {
+        try {
+            return await this.playerDAO.updatePlayer(updatedPlayer) ;
+        } catch (err) {
+            throw err;
+        }
+    }
     async findPlayerById(playerID) {
         try {
             return await this.playerDAO.findPlayerById(playerID);

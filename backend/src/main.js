@@ -39,9 +39,9 @@ testsDB();
 
 function testsDB() {
     //testGameRooms();
-    testSong();
-    // testPlayer();
-    // testGrpLink()
+    //testSong();
+    testPlayer();
+    //testGrpLink()
     // testGrsLink();
     // testSongPlayerLink();
     //testGameService();
@@ -53,9 +53,19 @@ function testGameRooms() {
     // testCreationGameRoom(gameRoom, gameRoomService);
     // testListGameRoom(gameRoom, gameRoomService);
     //testUpdateGr(gameRoomService);
-    //testDeleteGR(gameRoom, gameRoomService)
+    //testDeleteGR(gameRoomService)
+    //testfindGrByCodeAleatoire(gameRoomService)
 }
-async function testDeleteGR(gameRoom, gameRoomService) {
+async function testfindGrByCodeAleatoire(gameRoomService) {
+    try{
+        const gameRoom = await gameRoomService.findGameRoomByCodeAleatoire(14795);
+        console.log(gameRoom)
+    }catch (err) {
+        console.log(err)
+    }
+}
+
+async function testDeleteGR( gameRoomService) {
     try{
         gameRoomService.deleteGameRoom(6);
     }catch (err) {
@@ -101,8 +111,18 @@ function testSong() {
     const songService = new SongService();
     // testCreateSong(song, songService);
     //testListSong(songService);
-    testfindBySourceID(songService)
+    //testfindBySourceID(songService)
+    testUpdateSong(updatedSong,songService)
 
+}
+
+async function testUpdateSong(updatedSong,songService) {
+    try {
+        const new_song = await songService.updateSong(updatedSong);
+        console.log('Chanson modifiée:', new_song);
+    } catch (err) {
+        console.error('Error updating song:', err);
+    }
 }
 
 async function testfindBySourceID(songService){
@@ -125,7 +145,8 @@ function testPlayer() {
     const player = new PlayerModel('Bob', true, 'top25');
     const playerService = new PlayerService();
     // testCreatePlayer(player, playerService);
-    testListPlayers(playerService);
+    //testListPlayers(playerService);
+    testUpdatePlayer(playerService)
 }
 
 function testCreatePlayer(player, playerService) {
@@ -135,7 +156,18 @@ function testCreatePlayer(player, playerService) {
         console.error('Error creating player:', err);
     }
 }
-
+async function testUpdatePlayer(playerService) {
+    try {
+        let player = await playerService.findPlayerById(8);
+        player.user_name = "Adam";
+        player.spotify = 0;
+        console.log(player);
+        const nouveau_joueur = await playerService.updatePlayer(player);
+        console.log('Joueur modifié:', nouveau_joueur);
+    } catch (err) {
+        console.error('Error updating player:', err);
+    }
+}
 async function testListPlayers(playerService) {
     try {
         const allPlayers = await playerService.findAllPlayers();
@@ -153,21 +185,41 @@ function testGrpLink() {
     const playerPoints = 0;
     const playerRank = 0;
     const guessedSongs = "song";
+    const gameRoomID = 1
+    const playerID = 8
     const averageReactionTime = 2.5;
     const grpLink = new GrpLinkModel(player_id, game_room_id, playerPoints, playerRank, guessedSongs, averageReactionTime);
     const grpLinkService = new GrpLinkService();
-    testCreateGrpLink(grpLink, grpLinkService);
+    //testCreateGrpLink(grpLink, grpLinkService);
     // testFindGrpLinkByGameRoomId(2, grpLinkService);
     // testFindGrpLinkByPlayerId(7, grpLinkService);
     // testListGrpLinks(grpLinkService);
+    testDeleteGrpLink(gameRoomID, playerID,grpLinkService)
+    //testUpdateGrpLink(gameRoomID, playerID, updatedGrpLink,grpLinkService)
 }
 
+async function testUpdateGrpLink(gameRoomID, playerID, updatedGrpLink,grpLinkService) {
+    try {
+        const nvGrpLink = await grpLinkService.updateGrpLink(gameRoomID, playerID, updatedGrpLink);
+        console.log('GrpLink modifié:', nvGrpLink);
+    } catch (err) {
+        console.error('Error updating GrpLink:', err);
+    }
+}
 async function testCreateGrpLink(grpLink, grpLinkService) {
     try {
         const createdGrpLink = await grpLinkService.createGrpLink(grpLink);
         console.log('Created GrpLink:', createdGrpLink);
     } catch (err) {
         console.error('Error creating GrpLink:', err);
+    }
+}
+
+async function testDeleteGrpLink(gameRoomID, playerID, grpLinkService) {
+    try {
+        grpLinkService.deleteGrpLink(gameRoomID, playerID);
+    } catch (err) {
+        console.error('Error deleting GrpLink:', err);
     }
 }
 
