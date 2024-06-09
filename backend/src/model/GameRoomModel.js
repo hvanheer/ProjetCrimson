@@ -5,7 +5,7 @@ class GameRoomsModel {
         this.numberOfPlayers= 0;
         this.state = false;
         this.numberOfRounds = 0;
-        this.currentRound = 0;
+        this.currentRound = 1;
         this.codeAleatoire = 0;
     }
 }

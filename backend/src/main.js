@@ -40,11 +40,11 @@ testsDB();
 function testsDB() {
     //testGameRooms();
     //testSong();
-    testPlayer();
+    // testPlayer();
     //testGrpLink()
     // testGrsLink();
     // testSongPlayerLink();
-    //testGameService();
+    testGameService();
 }
 
 function testGameRooms() {
@@ -351,7 +351,7 @@ function testGameService() {
     let gameService = new GameService();
     try {
         // gameService.creationGameRoomParLePlayer(7, 15);
-        gameService.startGame(6,12);
+        gameService.startGame(3185,3);
     }catch (e) {
         console.log(e)
     }
