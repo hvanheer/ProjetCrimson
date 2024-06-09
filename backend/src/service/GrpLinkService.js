@@ -52,6 +52,7 @@ class GrpLinkService {
 
             let jsonListeDesConnexions = JSON.stringify(listDesConnexions);
             console.log(jsonListeDesConnexions);
+            //TODO: renvoyer le json au front
         } catch (err) {
             throw err;
         }
