@@ -89,6 +89,14 @@ struct ContentView: View {
                             .cornerRadius(8)
                     }
                     .padding()
+                    NavigationLink(destination: GameRoomMaster()) {
+                        Text("Creer une room")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                    
                 }
             }
             .navigationBarHidden(true)

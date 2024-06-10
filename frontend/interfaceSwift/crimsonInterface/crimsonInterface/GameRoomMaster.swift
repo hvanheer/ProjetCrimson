@@ -1,23 +1,13 @@
 //
-//  GameRoomPlayer.swift
+//  GameRoomMaster.swift
 //  crimsonInterface
 //
-//  Created by Augustin DENIS on 06/06/2024.
+//  Created by Augustin DENIS on 10/06/2024.
 //
 
 import SwiftUI
 
-struct Player: Identifiable, Codable {
-    var id = UUID()
-    var name: String
-
-    // Conformance to Decodable to handle missing ID in JSON
-    enum CodingKeys: CodingKey {
-        case name
-    }
-}
-
-struct GameRoomPlayer: View {
+struct GameRoomMaster: View {
     @State private var joinCode: String = "123456"
     @State private var players: [Player] = []
 
@@ -54,6 +44,14 @@ struct GameRoomPlayer: View {
                         
                         
                     }
+                
+                    NavigationLink(destination: MusicPlayerView()) {
+                        Text("Start Game")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
                 }
             }
         }
@@ -85,6 +83,7 @@ struct GameRoomPlayer: View {
     }
 }
 
+
 #Preview {
-    GameRoomPlayer()
+    GameRoomMaster()
 }
