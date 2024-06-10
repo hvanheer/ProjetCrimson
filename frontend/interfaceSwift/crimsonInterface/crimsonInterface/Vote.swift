@@ -59,14 +59,6 @@ struct Vote: View {
                             }
                             .frame(width: 325) // Set a fixed width for HStack to align text and button properly
                         }
-                    
-                        NavigationLink(destination: MusicPlayerView()) {
-                            Text("Start Game")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.blue)
-                                .cornerRadius(8)
-                        }
                     }
                 }
             }
