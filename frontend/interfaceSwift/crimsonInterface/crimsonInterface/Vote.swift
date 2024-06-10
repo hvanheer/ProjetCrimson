@@ -1,24 +1,13 @@
 //
-//  GameRoomPlayer.swift
+//  Vote.swift
 //  crimsonInterface
 //
-//  Created by Augustin DENIS on 06/06/2024.
+//  Created by Augustin DENIS on 10/06/2024.
 //
 
 import SwiftUI
 
-struct Player: Identifiable, Codable {
-    var id = UUID()
-    var name: String
-    var hasVoted: Bool = false
-
-    // Conformance to Decodable to handle missing ID in JSON
-    enum CodingKeys: CodingKey {
-        case name
-    }
-}
-
-struct GameRoomPlayer: View {
+struct Vote: View {
     @State private var joinCode: String = "123456"
     @State private var players: [Player] = []
 
@@ -51,9 +40,32 @@ struct GameRoomPlayer: View {
                             Divider()
                                 .background(Color.white)
                                 .frame(width: 325)
+                            HStack {
                                 Text(player.name)
                                     .foregroundColor(.white)
                                     .padding(.vertical, 1)
+                                Spacer()
+                                Button(action: {
+                                    player.hasVoted = true
+                                }) {
+                                    Text("Vote")
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .background(player.hasVoted ? Color.gray : Color.blue)
+                                        .cornerRadius(8)
+                                }
+                                .disabled(player.hasVoted)
+                            }
+                            .frame(width: 325) // Set a fixed width for HStack to align text and button properly
+                        }
+                    
+                        NavigationLink(destination: MusicPlayerView()) {
+                            Text("Start Game")
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(8)
                         }
                     }
                 }
@@ -72,7 +84,7 @@ struct GameRoomPlayer: View {
                 {"name": "Player4"},
                 {"name": "Player5"},
                 {"name": "Player6"},
-                {"name": "Player7"},
+                {"name": "Player7"}
             ]
             """.data(using: .utf8)!
             
@@ -87,5 +99,15 @@ struct GameRoomPlayer: View {
 }
 
 #Preview {
-    GameRoomPlayer()
+    Vote()
+}
+
+extension Color {
+    init(hex: UInt) {
+        self.init(
+            red: Double((hex >> 16) & 0xFF) / 255.0,
+            green: Double((hex >> 8) & 0xFF) / 255.0,
+            blue: Double(hex & 0xFF) / 255.0
+        )
+    }
 }
