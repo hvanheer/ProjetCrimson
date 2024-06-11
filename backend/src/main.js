@@ -40,11 +40,11 @@ testsDB();
 function testsDB() {
     //testGameRooms();
     //testSong();
-    // testPlayer();
+    testPlayer();
     // testGrpLink()
     // testGrsLink();
     // testSongPlayerLink();
-    testGameService();
+    // testGameService();
 }
 
 function testGameRooms() {
@@ -142,7 +142,7 @@ async function testListSong(songService) {
 }
 
 function testPlayer() {
-    const player = new PlayerModel('Bob', true, 'top25');
+    const player = new PlayerModel('Boby', true, 'top25');
     const playerService = new PlayerService();
     // testCreatePlayer(player, playerService);
     //testListPlayers(playerService);
@@ -158,7 +158,7 @@ function testCreatePlayer(player, playerService) {
 }
 async function testUpdatePlayer(playerService) {
     try {
-        let player = await playerService.findPlayerById(8);
+        let player = await playerService.findPlayerById(10);
         player.user_name = "Adam";
         player.spotify = 0;
         console.log(player);
