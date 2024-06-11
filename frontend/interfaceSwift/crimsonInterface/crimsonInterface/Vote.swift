@@ -19,7 +19,7 @@ struct Vote: View {
                         .overlay(
                             VStack {
                                 Spacer()
-                                Text("Lobby")
+                                Text("Vote")
                                     .font(.custom("Phosphate", size: 35))
                                     .foregroundColor(.white)
                                     .frame(maxHeight: .infinity, alignment: .topLeading)
@@ -31,7 +31,7 @@ struct Vote: View {
                     
                     VStack(spacing: 20) {
                         
-                        Text(joinCode)
+                        Text("Temps restant: 14s")
                             .font(.custom("Helvetica", size: 20))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
