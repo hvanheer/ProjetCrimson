@@ -5,7 +5,7 @@ class PlayerModel {
         this.user_name = user_name;
         this.top25 = top25;
         this.spotify = spotify;
-        this.token = "0";
+        this.token = token;
     }
 }
 
