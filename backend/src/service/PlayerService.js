@@ -17,7 +17,8 @@ class PlayerService {
             let listOfSongs = JSON.parse(createdPlayer.top25);
             for (let i = 0; i < listOfSongs.length; i++){
                 let songfromJson = listOfSongs[i];
-                let song = new SongModel("0", songfromJson.name, songfromJson.artists[0], songfromJson.album, songfromJson.release_date);
+                let artist = songfromJson.artists ? songfromJson.artists[0] : null;
+                let song = new SongModel("0", songfromJson.name, artist, songfromJson.album, songfromJson.release_date);
                 let createdSong = await songService.createSong(song);
                 let songPlayerLink = new SongPlayerLinkModel(createdPlayer.ID_user, createdSong.songID);
                 await songPlayerLinkService.createSongPlayerLink(songPlayerLink);
