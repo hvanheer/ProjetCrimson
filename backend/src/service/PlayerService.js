@@ -22,7 +22,7 @@ class PlayerService {
                 let songPlayerLink = new SongPlayerLinkModel(createdPlayer.ID_user, createdSong.songID);
                 await songPlayerLinkService.createSongPlayerLink(songPlayerLink);
             }
-
+            return createdPlayer;
         } catch (err) {
             throw err;
         }

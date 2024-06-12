@@ -92,15 +92,10 @@ app.get('/callback', async (req, res) => {
 
         console.log('Successfully retrieved access token. Expires : ', req.session.expires_in, '.');
 
-        //TODO : sauvegarder le token dans la db avec l'utilisateur
-        const userData = await getUserData(access_token);
-        if (!userData) {
-            throw new Error("Failed to retrieve user data");
-        }
-
-        req.session.user = userData.userName;
-        console.log("User's name:", userData.userName);
-        console.log("User's TopTracks:", userData.topTracks);
+        const playerCreated = await getUserData(access_token);
+        req.session.user = playerCreated.user_name;
+        console.log("User's name:", playerCreated.user_name);
+        console.log("User's TopTracks:", playerCreated.top25);
 
         res.send('Success! You can now close the window.');
     } catch (error) {
@@ -156,11 +151,9 @@ async function getUserData(access_token) {
             release_date: track.album.release_date,
             duration_ms: track.duration_ms
         }));
-        console.log("JSON :", tracksData);
         this.playerService = new PlayerService();
         const player = new PlayerModel(userName, true, tracksData, access_token);
-        this.playerService.createPlayer(player);
-        return { userName, tracksData };
+        return this.playerService.createPlayer(player);
     } catch (error) {
         console.error('Error retrieving user data:', error);
         return null;
@@ -168,27 +161,28 @@ async function getUserData(access_token) {
 }
 
 // Example route that requires a valid access token
-app.get('/play', ensureAuthenticated, async (req, res) => {
-    try {
-        const data = await readFileAsync('top_tracks.json');
-        const topTracks = JSON.parse(data);
-        const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
-        const trackId = randomTrack.trackId;
-        console.log('trackId:', trackId);
-        const positionMs = (randomTrack.duration_ms) * 0.3;
-        await playSong(trackId, positionMs);
-
-        const trackInfo = {
-            trackName: randomTrack.name,
-            trackArtists: randomTrack.artists,
-            trackAlbumCover: randomTrack.album.coverUrl
-        };
-
-        res.json({ trackInfo });
-    } catch (error) {
-        console.error('Error getting user data:', error);
-        res.status(500).send('Error getting user data');
-    }
+app.get('/play', async (req, res) => {
+    console.log('User name:', req.session.user);
+    // try {
+    //     const data = await readFileAsync('top_tracks.json');
+    //     const topTracks = JSON.parse(data);
+    //     const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
+    //     const trackId = randomTrack.trackId;
+    //     console.log('trackId:', trackId);
+    //     const positionMs = (randomTrack.duration_ms) * 0.3;
+    //     await playSong(trackId, positionMs);
+    //
+    //     const trackInfo = {
+    //         trackName: randomTrack.name,
+    //         trackArtists: randomTrack.artists,
+    //         trackAlbumCover: randomTrack.album.coverUrl
+    //     };
+    //
+    //     res.json({ trackInfo });
+    // } catch (error) {
+    //     console.error('Error getting user data:', error);
+    //     res.status(500).send('Error getting user data');
+    // }
 });
 
 app.listen(9999, '54.38.241.241', () =>
