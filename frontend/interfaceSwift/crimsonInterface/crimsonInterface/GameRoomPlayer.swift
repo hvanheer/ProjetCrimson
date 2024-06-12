@@ -10,11 +10,13 @@ import SwiftUI
 struct Player: Identifiable, Codable {
     var id = UUID()
     var name: String
+    var score: Int
     var hasVoted: Bool = false
 
     // Conformance to Decodable to handle missing ID in JSON
     enum CodingKeys: CodingKey {
         case name
+        case score
     }
 }
 
@@ -78,7 +80,7 @@ struct GameRoomPlayer: View {
             
             do {
                 let decodedPlayers = try JSONDecoder().decode([Player].self, from: jsonData)
-                self.players = decodedPlayers.map { Player(id: UUID(), name: $0.name) }
+                self.players = decodedPlayers.map { Player(id: UUID(), name: $0.name, score: $0.score) }
             } catch {
                 print("Failed to decode JSON: \(error)")
             }

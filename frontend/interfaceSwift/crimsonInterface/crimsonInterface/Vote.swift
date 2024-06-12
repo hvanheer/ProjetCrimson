@@ -82,7 +82,7 @@ struct Vote: View {
             
             do {
                 let decodedPlayers = try JSONDecoder().decode([Player].self, from: jsonData)
-                self.players = decodedPlayers.map { Player(id: UUID(), name: $0.name) }
+                self.players = decodedPlayers.map { Player(id: UUID(), name: $0.name, score: $0.score) }
             } catch {
                 print("Failed to decode JSON: \(error)")
             }
