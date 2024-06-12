@@ -171,6 +171,7 @@ async function getUserData(access_token) {
 
 app.get('/play', async (req, res) => {
     console.log('Session data:', req.session);
+    console.log('User name:', req.session.user);
     if (!req.session.user) {
         res.status(401).send('User not authenticated');
         return;
