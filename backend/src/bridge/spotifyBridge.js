@@ -156,6 +156,7 @@ async function getUserData(access_token) {
             release_date: track.album.release_date,
             duration_ms: track.duration_ms
         }));
+        console.log("JSON :", tracksData);
         this.playerService = new PlayerService();
         const player = new PlayerModel(userName, true, tracksData, access_token);
         this.playerService.createPlayer(player);
