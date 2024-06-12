@@ -28,6 +28,7 @@ app.use(session({
     secret: 'cookie_secret',
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false }
 }));
 
 const scopes = [
@@ -85,17 +86,14 @@ app.get('/callback', async (req, res) => {
         console.log("Access token:", access_token);
         req.session.access_token = access_token;
         req.session.refresh_token = refresh_token;
-        req.session.expires_in = Date.now() + 86400; // Store expiration time
+        req.session.expires_in = Date.now() + expires_in * 1000;
 
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
 
-        console.log('Successfully retrieved access token. Expires : ', req.session.expires_in, '.');
-
         const playerCreated = await getUserData(access_token);
         req.session.user = playerCreated.user_name;
         console.log("User's name:", playerCreated.user_name);
-        console.log("User's TopTracks:", playerCreated.top25);
 
         res.send('Success! You can now close the window.');
     } catch (error) {
@@ -160,9 +158,13 @@ async function getUserData(access_token) {
     }
 }
 
-// Example route that requires a valid access token
 app.get('/play', async (req, res) => {
-    console.log('User name:', req.session.user);
+    console.log('Session data:', req.session);
+    if (!req.session.user) {
+        res.status(401).send('User not authenticated');
+        return;
+    }
+
     // try {
     //     const data = await readFileAsync('top_tracks.json');
     //     const topTracks = JSON.parse(data);
@@ -183,6 +185,9 @@ app.get('/play', async (req, res) => {
     //     console.error('Error getting user data:', error);
     //     res.status(500).send('Error getting user data');
     // }
+
+    console.log('User name:', req.session.user);
+    res.send(`User name: ${req.session.user}`);
 });
 
 app.listen(9999, '54.38.241.241', () =>
@@ -303,23 +308,23 @@ app.listen(9999, '54.38.241.241', () =>
 //     }
 // });
 
-// Endpoint to pause the currently playing song
-app.get('/pause', async (req, res) => {
-    try {
-        if (isSpotify) {
-            // Pause the currently playing song on Spotify
-            await pauseSong();
-            res.send('Pausing the currently playing song on Spotify.');
-        } else {
-            // Pause the currently playing song on Deezer
-            await pauseSongDeezer();
-            res.send('Pausing the currently playing song on Deezer.');
-        }
-    } catch (error) {
-        console.error('Error pausing track:', error);
-        res.status(500).send('Failed to pause track.');
-    }
-});
+// // Endpoint to pause the currently playing song
+// app.get('/pause', async (req, res) => {
+//     try {
+//         if (isSpotify) {
+//             // Pause the currently playing song on Spotify
+//             await pauseSong();
+//             res.send('Pausing the currently playing song on Spotify.');
+//         } else {
+//             // Pause the currently playing song on Deezer
+//             await pauseSongDeezer();
+//             res.send('Pausing the currently playing song on Deezer.');
+//         }
+//     } catch (error) {
+//         console.error('Error pausing track:', error);
+//         res.status(500).send('Failed to pause track.');
+//     }
+// });
 
 // Route to fetch top tracks and return album cover URLs
 app.get('/albumCovers', async (req, res) => {
