@@ -31,6 +31,28 @@ class GameService {
         console.log("Code Aléatoire de la GameRoom :", responseFrontJson.codeAleatoire);
     }
 
+    async selectRandomSongFromTop25(gameRoomID) {
+        const grpLinkService = new GrpLinkService();
+        const songService = new SongService();
+
+        // Récupérer tous les joueurs de la GameRoom
+        let grpLinkList = await grpLinkService.findGrpLinkByGameRoomId(gameRoomID);
+        let playerIDs = grpLinkList.map(link => link.ID_user);
+
+        // Sélectionner un joueur aléatoirement
+        let randomPlayerID = playerIDs[Math.floor(Math.random() * playerIDs.length)];
+
+        // Récupérer le top 25 des musiques du joueur
+        let top25Songs = await songService.getTop25SongsByPlayerId(randomPlayerID);
+
+        // Sélectionner une musique aléatoirement parmi le top 25
+        let randomSong = top25Songs.top25[Math.floor(Math.random() * top25Songs.top25.length)];
+
+        return randomSong;
+    }
+
+
+
     async startGame(gameRoomCode, numberRoundMax){
         let gameRoomService = new GameRoomService();
         let songPlayerLinkService = new SongPlayerLinkService();
@@ -49,18 +71,20 @@ class GameService {
         while(gameRoom.currentRound <= gameRoom.numberOfRounds && gameRoom.state === true){
             //Juste pour empêcher une boucle infinie avant d'écrire des trucs
             console.log("tour ", gameRoom.currentRound)
-
+            //gameroom.state == false
             //incrémenter les fonctions !
 
             // Recherche aléatoire de la musique - Amélie
-
+            let randomSong = await this.selectRandomSongFromTop25(gameRoom.gameRoomID);
+            console.log("Musique sélectionnée aléatoirement :", randomSong);
             // Vérification du fait que la musique a déjà été jouée - Amélie
 
             // La musique joue - bridge spotify - Eléa
 
             // TODO : Enlever plus tard
-            let song = new SongModel(12, "Bob Song", "Bob", "boboy", new Date(2025, 2,2));
+            //let song = new SongModel(12, "Bob Song", "Bob", "boboy", new Date(2025, 2,2));
             // fin de à enlever plus tard
+            let song = randomSong;
             // await playSong(song.fromSourceID, 10);
             console.log("Début de la musique")
             await delay(2000);
@@ -75,9 +99,9 @@ class GameService {
 
             // Ici, le bon vote est pour la musique 3 appartient à joueur 7
             // TODO : enlever quand on aura implémenter la recherche aléatoire de musique
-            let songID = 3;
+            //let songID = 3;
             //Fin enlever
-
+            let songID = randomSong.songID;
             let songPlayerLinkList = await songPlayerLinkService.findSongPlayerLinkBySongId(songID)
             let listOfResults = []
             for (let i = 0; i < listOfVotes.length; i++) {
