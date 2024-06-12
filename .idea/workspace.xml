@@ -45,7 +45,7 @@
     "Node.js.main.js.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "deezerPlayerMergeBranch",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/guill/Documents/4A/COURSES/ANGULAR/TP",
@@ -84,6 +84,7 @@
       <workItem from="1717496870361" duration="42000" />
       <workItem from="1717499138908" duration="87000" />
       <workItem from="1717583006746" duration="1129000" />
+      <workItem from="1718204806626" duration="330000" />
     </task>
     <servers />
   </component>
