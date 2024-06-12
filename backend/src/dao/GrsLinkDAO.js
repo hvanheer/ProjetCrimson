@@ -37,6 +37,14 @@ class GrsLinkDAO {
             throw err;
         }
     }
+    async findGrsLinkBySongAndGameRoomId(songID, gameRoomID) {
+        try {
+            const db = await this.connexionManager.getDbConnection();
+            return await db.query(this.connexionManager.connection, 'SELECT * FROM grslink WHERE songID = ? AND gameRoomID = ?', [songID, gameRoomID]);
+        } catch (err) {
+            throw err;
+        }
+    }
 
 
     async findAllGrsLink() {

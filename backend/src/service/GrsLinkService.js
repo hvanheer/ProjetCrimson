@@ -34,6 +34,13 @@ class GrsLinkService {
             throw err;
         }
     }
+    async findGrsLinkBySongAndGameRoomId(songID, gameRoomID) {
+        try {
+            return await this.grsLinkDAO.findGrsLinkBySongAndGameRoomId(songID, gameRoomID);
+        } catch (err) {
+            throw err;
+        }
+    }
 
     async findAllGrsLink() {
         try {

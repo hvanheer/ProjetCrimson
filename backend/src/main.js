@@ -250,9 +250,9 @@ async function testListGrpLinks(grpLinkService) {
     }
 }
 
-function testGrsLink() {
-    const game_room_id = 3;
-    const songs_id = 1;
+async function testGrsLink() {
+    const game_room_id = 7;
+    const songs_id = 24;
 
     const grsLink = new GrsLinkModel(game_room_id, songs_id);
     const grsLinkService = new GrsLinkService();
@@ -261,6 +261,8 @@ function testGrsLink() {
     // testFindGrsLinkByGameRoomId(2, grsLinkService);
     // testFindGrsLinkBySongId(2, grsLinkService);
     // testListGrsLinks(grsLinkService);
+    let grsLinkList = await grsLinkService.findGrsLinkBySongAndGameRoomId(songs_id, game_room_id);
+    console.log(grsLinkList);
 }
 async function testCreateGrsLink(grsLink, grsLinkService) {
     try {
