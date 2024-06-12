@@ -15,29 +15,31 @@ const SongPlayerLinkService = require('./service/SongPlayerLinkService');
 const GameService = require('./service/GameService');
 const fs = require('fs');
 const path = require('path');
+const connexionManager = require("./persistence/connexionManager");
 
 
 async function fetchAllUsers() {
     try {
-        const userModelInstance = new UserModel("Guillaume", "top25");
-        const userService = new UserService();
-        // const user1 = await userService.createUser(userModelInstance);
-        // console.log(user1);
-        // const userSearched = await userService.findUserById(3);
-        // console.log(userSearched);
-        // console.log(userSearched["ID_user"]);
-        // console.log(userSearched["user_name"]);
-        const allUsers = await userService.findAllUsers();
-        console.log(allUsers);
-        userService.closeDBConnection();
+        this.connexionManager = new connexionManager();
+        const db = await this.connexionManager.getDbConnection();
+        const query1 = `SET FOREIGN_KEY_CHECKS = 0;`;
+        const query2 = `TRUNCATE TABLE players;`;
+        const query3 = `TRUNCATE TABLE songs;`;
+        const query4 = `TRUNCATE TABLE songs_players_link;`;
+        const query5 = `SET FOREIGN_KEY_CHECKS = 1;`;
+        await db.query(this.connexionManager.connection, query1);
+        await db.query(this.connexionManager.connection, query2);
+        await db.query(this.connexionManager.connection, query3);
+        await db.query(this.connexionManager.connection, query4);
+        await db.query(this.connexionManager.connection, query5);
     } catch (err) {
         console.error('Error fetching all users:', err);
     }
 }
 
-// fetchAllUsers();
+fetchAllUsers();
 
-testsDB();
+//testsDB();
 
 
 function testsDB() {

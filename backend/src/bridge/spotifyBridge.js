@@ -1,5 +1,7 @@
 const { playSong, pauseSong, playSongDeezer, pauseSongDeezer, getMyTopTracks } = require('../api/apiFunctions');
 const {isSpotify} = require("../api/apiLogin");
+const PlayerService = require("../service/PlayerService");
+const PlayerModel = require("../model/PlayerModel");
 
 const express = require('express');
 const session = require('express-session');
@@ -88,11 +90,10 @@ app.get('/callback', async (req, res) => {
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
 
-        //TODO : pas sur de l'utilisation de req.session si stockage en db
         console.log('Successfully retrieved access token. Expires : ', req.session.expires_in, '.');
 
         //TODO : sauvegarder le token dans la db avec l'utilisateur
-        const userData = await getUserData();
+        const userData = await getUserData(access_token);
         if (!userData) {
             throw new Error("Failed to retrieve user data");
         }
@@ -139,13 +140,15 @@ const ensureAuthenticated = async (req, res, next) => {
     next();
 };
 
-async function getUserData() {
+async function getUserData(access_token) {
     try {
         const meData = await spotifyApi.getMe();
         const topTracksData = await spotifyApi.getMyTopTracks({ limit: 20 });
         const userName = meData.body.display_name;
         const topTracks = topTracksData.body.items.map(track => track.name);
-        //TODO : Sauvegarder les informations ici en utilisant les fonctions services avant de les retourner
+        this.playerService = new PlayerService();
+        const player = new PlayerModel(userName, true, topTracks, access_token);
+        this.playerService.createPlayer(player);
         return { userName, topTracks };
     } catch (error) {
         console.error('Error retrieving user data:', error);
