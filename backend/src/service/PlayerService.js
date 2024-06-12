@@ -1,4 +1,8 @@
 const PlayerDAO = require('../dao/PlayerDAO');
+const SongModel = require("../model/SongModel");
+const SongService = require("./SongService");
+const SongPlayerLinkModel = require("../model/SongPlayerLinkModel");
+const SongPlayerLinkService = require("./SongPlayerLinkService");
 
 class PlayerService {
     constructor() {
@@ -6,8 +10,19 @@ class PlayerService {
     }
 
     async createPlayer(player) {
+        let songService = new SongService();
+        let songPlayerLinkService = new SongPlayerLinkService();
         try {
-            return await this.playerDAO.createPlayer(player);
+            let createdPlayer = await this.playerDAO.createPlayer(player);
+            let listOfSongs = JSON.parse(createdPlayer.top25);
+            for (let i = 0; i < listOfSongs.length; i++){
+                let songfromJson = listOfSongs[i];
+                let song = new SongModel("0", songfromJson.name, songfromJson.artists[0], songfromJson.album, songfromJson.release_date);
+                let createdSong = await songService.createSong(song);
+                let songPlayerLink = new SongPlayerLinkModel(createdPlayer.ID_user, createdSong.songID);
+                await songPlayerLinkService.createSongPlayerLink(songPlayerLink);
+            }
+
         } catch (err) {
             throw err;
         }

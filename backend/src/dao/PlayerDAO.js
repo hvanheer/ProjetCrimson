@@ -9,7 +9,10 @@ class PlayerDAO {
         try {
             const db = await this.connexionManager.getDbConnection();
             const top25String = JSON.stringify(player.top25); // Serialize the array of objects
-            return await db.query(this.connexionManager.connection, 'INSERT INTO players(user_name, spotify, top25, token) VALUES(?, ?, ?, ?)', [player.user_name, player.spotify, top25String, player.token]);
+            const result = await db.query(this.connexionManager.connection, 'INSERT INTO players(user_name, spotify, top25, token) VALUES(?, ?, ?, ?)', [player.user_name, player.spotify, top25String, player.token]);
+            const playerId = result.insertId;
+            const [createdPlayer] = await db.query(this.connexionManager.connection, 'SELECT * FROM players WHERE ID_user = ?', [playerId]);
+            return createdPlayer;
         } catch (err) {
             throw err;
         }

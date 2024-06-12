@@ -4,7 +4,7 @@ class GameRoomsModel {
         this.id = 0;
         this.numberOfPlayers= 0;
         this.state = false;
-        this.numberOfRounds = 0;
+        this.numberOfRounds = 7;
         this.currentRound = 1;
         this.codeAleatoire = 0;
     }

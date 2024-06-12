@@ -8,7 +8,10 @@ class SongDAO {
     async createSong(song) {
         try {
             const db = await this.connexionManager.getDbConnection();
-            return await db.query(this.connexionManager.connection, 'INSERT INTO songs(fromSourceID, songName, songArtists, songAlbum, songReleaseDate) VALUES(?, ?, ?, ?, ?)', [song.fromSourceID, song.songName, song.songArtists, song.songAlbum, song.songReleaseDate]);
+            const result = await db.query(this.connexionManager.connection, 'INSERT INTO songs(fromSourceID, songName, songArtists, songAlbum, songReleaseDate) VALUES(?, ?, ?, ?, ?)', [song.fromSourceID, song.songName, song.songArtists, song.songAlbum, song.songReleaseDate]);
+            const songId = result.insertId;
+            const [createdSong] = await db.query(this.connexionManager.connection, 'SELECT * FROM songs WHERE songID = ?', [songId]);
+            return createdSong;
         } catch (err) {
             throw err;
         }

@@ -12,7 +12,10 @@ const GrsLinkModel = require('./model/GrsLinkModel');
 const GrsLinkService = require('./service/GrsLinkService');
 const SongPlayerLinkModel = require('./model/SongPlayerLinkModel');
 const SongPlayerLinkService = require('./service/SongPlayerLinkService');
-const GameService = require('./service/GameService')
+const GameService = require('./service/GameService');
+const fs = require('fs');
+const path = require('path');
+
 
 async function fetchAllUsers() {
     try {
@@ -141,12 +144,22 @@ async function testListSong(songService) {
     console.log(thisSong);
 }
 
+function readJsonFileSync(filePath) {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(data);
+}
+
 function testPlayer() {
-    const player = new PlayerModel('Boby', true, 'top25');
+
+
+    const jsonFilePath = path.join(__dirname, './api/top_tracks.json');
+    const top25Data = readJsonFileSync(jsonFilePath);
+
+    const player = new PlayerModel('Amandine', true, top25Data);
     const playerService = new PlayerService();
-    // testCreatePlayer(player, playerService);
+    testCreatePlayer(player, playerService);
     //testListPlayers(playerService);
-    testUpdatePlayer(playerService)
+    // testUpdatePlayer(playerService)
 }
 
 function testCreatePlayer(player, playerService) {
