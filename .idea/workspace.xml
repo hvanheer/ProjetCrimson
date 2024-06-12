@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="312be513-050f-44c5-a500-c1872298786f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/bridge/spotifyBridge.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/bridge/spotifyBridge.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

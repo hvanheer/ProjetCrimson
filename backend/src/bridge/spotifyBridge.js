@@ -5,6 +5,7 @@ const PlayerModel = require("../model/PlayerModel");
 
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const SpotifyWebApi = require('spotify-web-api-node');
 const fs = require('fs');
 const { promisify } = require('util');
@@ -28,8 +29,18 @@ app.use(session({
     secret: 'cookie_secret',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: {
+        sameSite: false,
+        secure: false }
 }));
+
+app.use(
+    cors({
+        origin: "http://54.38.241.241:3000",
+        methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+        credentials: true,
+    })
+);
 
 const scopes = [
     'ugc-image-upload',
