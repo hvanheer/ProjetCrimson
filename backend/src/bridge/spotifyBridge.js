@@ -145,11 +145,21 @@ async function getUserData(access_token) {
         const meData = await spotifyApi.getMe();
         const topTracksData = await spotifyApi.getMyTopTracks({ limit: 20 });
         const userName = meData.body.display_name;
-        const topTracks = topTracksData.body.items.map(track => track.name);
+        const tracksData = topTracksData.body.items.map(track => ({
+            trackId: track.id,
+            name: track.name,
+            artists: track.artists.map(artist => artist.name),
+            album: {
+                name: track.album.name,
+                coverUrl: track.album.images.length > 0 ? track.album.images[0].url : null // Use the first image as the cover URL
+            },
+            release_date: track.album.release_date,
+            duration_ms: track.duration_ms
+        }));
         this.playerService = new PlayerService();
-        const player = new PlayerModel(userName, true, topTracks, access_token);
+        const player = new PlayerModel(userName, true, tracksData, access_token);
         this.playerService.createPlayer(player);
-        return { userName, topTracks };
+        return { userName, tracksData };
     } catch (error) {
         console.error('Error retrieving user data:', error);
         return null;
