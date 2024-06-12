@@ -80,15 +80,18 @@ app.get('/callback', async (req, res) => {
         const refresh_token = data.body['refresh_token'];
         const expires_in = data.body['expires_in'];
 
+        console.log("Access token:", access_token);
         req.session.access_token = access_token;
         req.session.refresh_token = refresh_token;
-        req.session.expires_in = Date.now() + expires_in * 1000; // Store expiration time
+        req.session.expires_in = Date.now() + 86400; // Store expiration time
 
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
 
-        console.log('Successfully retrieved access token. Expires in', expires_in, 's.');
+        //TODO : pas sur de l'utilisation de req.session si stockage en db
+        console.log('Successfully retrieved access token. Expires : ', req.session.expires_in, '.');
 
+        //TODO : sauvegarder le token dans la db avec l'utilisateur
         const userData = await getUserData();
         if (!userData) {
             throw new Error("Failed to retrieve user data");
@@ -98,6 +101,7 @@ app.get('/callback', async (req, res) => {
         console.log("User's name:", userData.userName);
         console.log("User's TopTracks:", userData.topTracks);
 
+        res.redirect('/');
         res.send('Success! You can now close the window.');
     } catch (error) {
         console.error('Error getting Tokens:', error);
@@ -143,6 +147,7 @@ async function getUserData() {
         const topTracksData = await spotifyApi.getMyTopTracks({ limit: 20 });
         const userName = meData.body.display_name;
         const topTracks = topTracksData.body.items.map(track => track.name);
+        //TODO : Sauvegarder les informations ici en utilisant les fonctions services avant de les retourner
         return { userName, topTracks };
     } catch (error) {
         console.error('Error retrieving user data:', error);
