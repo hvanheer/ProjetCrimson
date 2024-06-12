@@ -6,10 +6,10 @@ let db = null;
 class ConnexionManager {
     constructor() {
         this.connection = mysql.createConnection({
-            host: "localhost",
+            host: "54.38.241.241",
             user: "root",
-            password: "changeme",
-            database: "crimson"
+            password: "dgcbuHBCWQIbde8724257?!!",
+            database: "crimsonV2"
         });
         if (db === null) {
             this.db = makeDb();
