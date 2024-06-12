@@ -1,4 +1,4 @@
-const songDAO = require('../dao/songDAO');
+const songDAO = require('../dao/SongDAO');
 
 class SongService {
     constructor() {
