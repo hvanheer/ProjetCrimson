@@ -24,25 +24,30 @@ struct crimsonInterfaceApp: App {
 }
 
 extension crimsonInterfaceApp {
-    static func connexionSpotify() {
-        guard let url = URL(string: "http://54.38.241.241:3000/connectAPI") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Erreur de requête : \(error.localizedDescription)")
-            } else if let data = data {
-                if let responseString = String(data: data, encoding: .utf8),
-                   let responseURL = URL(string: responseString) {
-                    DispatchQueue.main.async {
-                        let safariViewController = SFSafariViewController(url: responseURL)
-                        UIApplication.shared.windows.first?.rootViewController?.present(safariViewController, animated: true, completion: nil)
+    static func connexionSpotify(completion: @escaping () -> Void) {
+            guard let url = URL(string: "http://54.38.241.241:3000/connectAPI") else { return }
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Erreur de requête : \(error.localizedDescription)")
+                } else if let data = data {
+                    if let responseString = String(data: data, encoding: .utf8),
+                       let responseURL = URL(string: responseString) {
+                        DispatchQueue.main.async {
+                            let safariViewController = SFSafariViewController(url: responseURL)
+                            UIApplication.shared.windows.first?.rootViewController?.present(safariViewController, animated: true, completion: nil)
+                        }
+                        
+                        // Imprimer la réponse de l'API dans la console
+                        print("Réponse de l'API : \(responseString)")
+                        
+                        // Appeler la closure de completion
+                        DispatchQueue.main.async {
+                            completion()
+                        }
                     }
-                    
-                    // Imprimer la réponse de l'API dans la console
-                    print("Réponse de l'API : \(responseString)")
                 }
-            }
-        }.resume()
-    }
+            }.resume()
+        }
 
 
     

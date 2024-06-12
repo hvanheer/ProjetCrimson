@@ -20,16 +20,16 @@ struct MusicPlayerView: View {
                 LinearGradient(gradient: Gradient(colors: [Color(hex: 0x660033), Color(hex: 0x0066CC)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
                     .overlay(
-                                        VStack {
-                                            Text("Now Playing")
-                                                .font(.custom("Phosphate", size: 35))
-                                                .foregroundColor(.white)
-                                                .frame(maxHeight: .infinity, alignment: .topLeading)
-                                                .padding(.top)
-                                            Spacer()
-                                        },
-                                        alignment: .top
-                                    )
+                        VStack {
+                            Text("Now Playing")
+                                .font(.custom("Phosphate", size: 35))
+                                .foregroundColor(.white)
+                                .frame(maxHeight: .infinity, alignment: .topLeading)
+                                .padding(.top)
+                            Spacer()
+                        },
+                        alignment: .top
+                    )
                 VStack(spacing: 20) {
                     // Image de la pochette de l'album
                     if let albumArtworkURL = albumArtworkURL {
