@@ -101,7 +101,6 @@ app.get('/callback', async (req, res) => {
         console.log("User's name:", userData.userName);
         console.log("User's TopTracks:", userData.topTracks);
 
-        //res.redirect('/');
         res.send('Success! You can now close the window.');
     } catch (error) {
         res.send(`Error getting Tokens: ${error}`);
