@@ -97,7 +97,7 @@ async function playSong(trackId, positionMs) {
     }
 }
 
-async function playSongDeezer(trackId, positionMs) {
+/*async function playSongDeezer(trackId, positionMs) {
     try {
         // Play the specified track
         DZ.player.playTracks([trackId]);
@@ -109,7 +109,7 @@ async function playSongDeezer(trackId, positionMs) {
         console.error('Error playing track:', error);
         throw error;
     }
-}
+}*/
 
 
 async function pauseSong(){
@@ -121,7 +121,7 @@ async function pauseSong(){
     }
 }
 
-async function pauseSongDeezer() {
+/*async function pauseSongDeezer() {
     try {
         // Pause the currently playing song
         DZ.player.pause();
@@ -129,11 +129,11 @@ async function pauseSongDeezer() {
     } catch (error) {
         console.error('Error pausing the song:', error);
     }
-}
+}*/
 
 
 // Export des fonctions
-module.exports = { getUserName, getMyTopTracks, getUserData, playSong, pauseSong, playSongDeezer, pauseSongDeezer};
+module.exports = { getUserName, getMyTopTracks, getUserData, playSong, pauseSong};
 
 // Call the function to get the user's top tracks
 //getMyTopTracks();

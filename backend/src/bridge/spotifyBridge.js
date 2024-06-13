@@ -275,8 +275,8 @@ app.get('/callback', (req, res) => {
 // Endpoint to play songs
 app.get('/play', async (req, res) => {
     try {
-        console.log('isSpotify:', req.session.isSpotify);
-        if (req.session.isSpotify) {
+        //console.log('isSpotify:', req.session.isSpotify);
+        //if (req.session.isSpotify) {
             // Play a random track on Spotify
             // Read the top tracks JSON file
             const data = await readFileAsync('top_tracks.json');
@@ -303,11 +303,11 @@ app.get('/play', async (req, res) => {
                 trackInfo: trackInfo
             });
 
-        } else {
+        //} else {
             // Play a random track on Deezer
-            await playSongDeezer();
-            res.send('Playing a random song on Deezer.');
-        }
+           // await playSongDeezer();
+            //res.send('Playing a random song on Deezer.');
+        //}
     } catch (error) {
         console.error('Error playing track:', error);
         res.status(500).send('Failed to play or pause track.');
@@ -317,15 +317,15 @@ app.get('/play', async (req, res) => {
 // Endpoint to pause the currently playing song
 app.get('/pause', async (req, res) => {
     try {
-        if (req.session.isSpotify) {
+       // if (req.session.isSpotify) {
             // Pause the currently playing song on Spotify
             await pauseSong();
             res.send('Pausing the currently playing song on Spotify.');
-        } else {
+        //} else {
             // Pause the currently playing song on Deezer
-            await pauseSongDeezer();
-            res.send('Pausing the currently playing song on Deezer.');
-        }
+           // await pauseSongDeezer();
+          //  res.send('Pausing the currently playing song on Deezer.');
+       // }
     } catch (error) {
         console.error('Error pausing track:', error);
         res.status(500).send('Failed to pause track.');
