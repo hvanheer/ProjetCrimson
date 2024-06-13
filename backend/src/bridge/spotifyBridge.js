@@ -177,26 +177,27 @@ app.get('/play', async (req, res) => {
         return;
     }
 
-    // try {
-    //     const data = await readFileAsync('top_tracks.json');
-    //     const topTracks = JSON.parse(data);
-    //     const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
-    //     const trackId = randomTrack.trackId;
-    //     console.log('trackId:', trackId);
-    //     const positionMs = (randomTrack.duration_ms) * 0.3;
-    //     await playSong(trackId, positionMs);
-    //
-    //     const trackInfo = {
-    //         trackName: randomTrack.name,
-    //         trackArtists: randomTrack.artists,
-    //         trackAlbumCover: randomTrack.album.coverUrl
-    //     };
-    //
-    //     res.json({ trackInfo });
-    // } catch (error) {
-    //     console.error('Error getting user data:', error);
-    //     res.status(500).send('Error getting user data');
-    // }
+    try {
+        const data = await readFileAsync('top_tracks.json');
+        const topTracks = JSON.parse(data);
+        const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
+        const trackId = randomTrack.trackId;
+        console.log('trackId:', trackId);
+        const positionMs = (randomTrack.duration_ms) * 0.3;
+        await playSong(trackId, positionMs);
+
+        const trackInfo = {
+            trackName: randomTrack.name,
+            trackArtists: randomTrack.artists,
+            trackAlbumCover: randomTrack.album.coverUrl
+        };
+
+        res.json({ trackInfo });
+    } catch (error) {
+        console.error('Error getting user data:', error);
+        res.status(500).send('Error getting user data');
+    }
+
 
     console.log('User name:', req.session.user);
     res.send(`User name: ${req.session.user}`);

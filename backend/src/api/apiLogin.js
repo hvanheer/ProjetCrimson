@@ -88,12 +88,13 @@ function connectAPI() {
                 console.log('refresh_token:', refresh_token);
                 console.log('Successfully retrieved access token. Expires in ${expires_in} s.');
 
+                // Once you get the access token, save it to a file
+                fs.writeFileSync('token.txt', access_token);
+
                 // Fetch user data
                 return getUserData();
             })
 
-            // Once you get the access token, save it to a file
-            //fs.writeFileSync('token.txt', access_token);
 
             //getUserData()
             //.then(userData => {
@@ -193,7 +194,7 @@ function connectAPI() {
             });
     });
 
-    async function getUserData() {
+    /*async function getUserData() {
         try {
             const meData = await spotifyApi.getMe();
             const topTracksData = await spotifyApi.getMyTopTracks({ limit: 25, time_range: 'long_term' });
@@ -209,7 +210,7 @@ function connectAPI() {
             console.error('Error retrieving user data:', error);
             return null;
         }
-    }
+    }*/
 
     /* ================================================================================ */
 
