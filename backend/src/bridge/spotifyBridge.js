@@ -78,7 +78,7 @@ app.get('/login', (req, res) => {
     res.redirect(spotifyApi.createAuthorizeURL(scopes));
 });
 
-app.get('/callback', async (req, res) => {
+/*app.get('/callback', async (req, res) => {
     const error = req.query.error;
     const code = req.query.code;
 
@@ -110,7 +110,7 @@ app.get('/callback', async (req, res) => {
     } catch (error) {
         res.send(`Error getting Tokens: ${error}`);
     }
-});
+});*/
 
 // Middleware to ensure user is authenticated
 const ensureAuthenticated = async (req, res, next) => {
@@ -169,13 +169,13 @@ async function getUserData(access_token) {
     }
 }
 
-app.get('/play', async (req, res) => {
+/*app.get('/play', async (req, res) => {
     //console.log('Session data:', req.session);
     //console.log('User name:', req.session.user);
-    /*if (!req.session.user) {
+    if (!req.session.user) {
         res.status(401).send('User not authenticated');
         return;
-    }*/
+    }
 
     try {
         const data = await readFileAsync('top_tracks.json');
@@ -202,142 +202,136 @@ app.get('/play', async (req, res) => {
     console.log('User name:', req.session.user);
     res.send(`User name: ${req.session.user}`);
 });
+*/
 
-app.listen(9999, '54.38.241.241', () =>
-    console.log(
-        'HTTP Server up. Now go to http://54.38.241.241/login or http://54.38.241.241/deezer in your browser.'
-    )
-);
+app.get('/callback', (req, res) => {
+    const error = req.query.error;
+    const code = req.query.code;
+    const state = req.query.state;
 
+    if (error) {
+        console.error('Callback Error:', error);
+        res.send(`Callback Error: ${error}`);
+        return;
+    }
 
+    spotifyApi.authorizationCodeGrant(code)
+        .then(async data => {
+            const access_token = data.body['access_token'];
+            const refresh_token = data.body['refresh_token'];
+            const expires_in = data.body['expires_in'];
 
-// app.get('/callback', (req, res) => {
-//     const error = req.query.error;
-//     const code = req.query.code;
-//     const state = req.query.state;
-//
-//     if (error) {
-//         console.error('Callback Error:', error);
-//         res.send(`Callback Error: ${error}`);
-//         return;
-//     }
-//
-//     spotifyApi.authorizationCodeGrant(code)
-//         .then(async data => {
-//             const access_token = data.body['access_token'];
-//             const refresh_token = data.body['refresh_token'];
-//             const expires_in = data.body['expires_in'];
-//
-//             // Save tokens in session
-//             req.session.access_token = access_token;
-//             req.session.refresh_token = refresh_token;
-//             req.session.expires_in = expires_in;
-//             req.session.isSpotify = true;
-//
-//             // Save access token to use it later
-//             spotifyApi.setAccessToken(access_token);
-//             spotifyApi.setRefreshToken(refresh_token);
-//
-//             console.log('access_token:', access_token);
-//             console.log('refresh_token:', refresh_token);
-//             console.log('Successfully retrieved access token. Expires in ${expires_in} s.');
-//
-//             // Fetch user data
-//             return getUserData();
-//         })
-//         .then(userData => {
-//             if (!userData) {
-//                 throw new Error("Failed to retrieve user data");
-//             }
-//
-//             // Debugging output for userData
-//             console.log("Retrieved user data:", userData);
-//
-//             req.session.user = userData.userName;
-//             console.log("User's name:", userData.userName);
-//             console.log("User's TopTracks:", userData.topTracks);
-//
-//             res.send('Success! You can now close the window.');
-//
-//             // Refresh the access token before it expires
-//             setInterval(async () => {
-//                 try {
-//                     const data = await spotifyApi.refreshAccessToken();
-//                     const newAccessToken = data.body['access_token'];
-//                     console.log('The access token has been refreshed!');
-//                     console.log('access_token:', newAccessToken);
-//                     spotifyApi.setAccessToken(newAccessToken);
-//                     req.session.access_token = newAccessToken;
-//                 } catch (error) {
-//                     console.error('Error refreshing access token:', error);
-//                 }
-//             }, (req.session.expires_in / 2) * 1000);
-//         })
-//         .catch(error => {
-//             console.error('Error getting Tokens:', error);
-//             res.send('Error getting Tokens: ${error}');
-//         });
-// });
+            // Save tokens in session
+            req.session.access_token = access_token;
+            req.session.refresh_token = refresh_token;
+            req.session.expires_in = expires_in;
+            req.session.isSpotify = true;
 
-// // Endpoint to play songs
-// app.get('/play', async (req, res) => {
-//     try {
-//         console.log('isSpotify:', isSpotify);
-//         if (isSpotify) {
-//             // Play a random track on Spotify
-//             // Read the top tracks JSON file
-//             const data = await readFileAsync('top_tracks.json');
-//             const topTracks = JSON.parse(data);
-//
-//             // Select a random track from the list
-//             const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
-//
-//             // Play the random track
-//             const trackId = randomTrack.trackId;
-//             console.log('trackId:', trackId)
-//             const positionMs = (randomTrack.duration_ms) * 0.3; // 30% of the track's duration
-//             await playSong(trackId, positionMs);
-//
-//             // Construct track information object
-//             const trackInfo = {
-//                 trackName: randomTrack.name,
-//                 trackArtists: randomTrack.artists,
-//                 trackAlbumCover: randomTrack.album.coverUrl
-//             };
-//
-//             // Send response containing both track information and played track information
-//             res.json({
-//                 trackInfo: trackInfo
-//             });
-//
-//         } else {
-//             // Play a random track on Deezer
-//             await playSongDeezer();
-//             res.send('Playing a random song on Deezer.');
-//         }
-//     } catch (error) {
-//         console.error('Error playing track:', error);
-//         res.status(500).send('Failed to play or pause track.');
-//     }
-// });
+            // Save access token to use it later
+            spotifyApi.setAccessToken(access_token);
+            spotifyApi.setRefreshToken(refresh_token);
 
-// // Endpoint to pause the currently playing song
-// app.get('/pause', async (req, res) => {
-//     try {
-//         if (isSpotify) {
-//             // Pause the currently playing song on Spotify
-//             await pauseSong();
-//             res.send('Pausing the currently playing song on Spotify.');
-//         } else {
-//             // Pause the currently playing song on Deezer
-//             await pauseSongDeezer();
-//             res.send('Pausing the currently playing song on Deezer.');
-//         }
-//     } catch (error) {
-//         console.error('Error pausing track:', error);
-//         res.status(500).send('Failed to pause track.');
-//     }
-// });
+            console.log('access_token:', access_token);
+            console.log('refresh_token:', refresh_token);
+            console.log(`Successfully retrieved access token. Expires in ${expires_in} s.`);
+
+            // Fetch user data
+            return getUserData();
+        })
+        .then(userData => {
+            if (!userData) {
+                throw new Error("Failed to retrieve user data");
+            }
+
+            // Debugging output for userData
+            console.log("Retrieved user data:", userData);
+
+            req.session.user = userData.userName;
+            console.log("User's name:", userData.userName);
+            console.log("User's TopTracks:", userData.topTracks);
+
+            res.send('Success! You can now close the window.');
+
+            // Refresh the access token before it expires
+            setInterval(async () => {
+                try {
+                    const data = await spotifyApi.refreshAccessToken();
+                    const newAccessToken = data.body['access_token'];
+                    console.log('The access token has been refreshed!');
+                    console.log('access_token:', newAccessToken);
+                    spotifyApi.setAccessToken(newAccessToken);
+                    req.session.access_token = newAccessToken;
+                } catch (error) {
+                    console.error('Error refreshing access token:', error);
+                }
+            }, (req.session.expires_in / 2) * 1000);
+        })
+        .catch(error => {
+            console.error('Error getting Tokens:', error);
+            res.send(`Error getting Tokens: ${error}`);
+        });
+});
+
+// Endpoint to play songs
+app.get('/play', async (req, res) => {
+    try {
+        console.log('isSpotify:', req.session.isSpotify);
+        if (req.session.isSpotify) {
+            // Play a random track on Spotify
+            // Read the top tracks JSON file
+            const data = await readFileAsync('top_tracks.json');
+            const topTracks = JSON.parse(data);
+
+            // Select a random track from the list
+            const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
+
+            // Play the random track
+            const trackId = randomTrack.trackId;
+            console.log('trackId:', trackId)
+            const positionMs = (randomTrack.duration_ms) * 0.3; // 30% of the track's duration
+            await playSong(trackId, positionMs);
+
+            // Construct track information object
+            const trackInfo = {
+                trackName: randomTrack.name,
+                trackArtists: randomTrack.artists,
+                trackAlbumCover: randomTrack.album.coverUrl
+            };
+
+            // Send response containing both track information and played track information
+            res.json({
+                trackInfo: trackInfo
+            });
+
+        } else {
+            // Play a random track on Deezer
+            await playSongDeezer();
+            res.send('Playing a random song on Deezer.');
+        }
+    } catch (error) {
+        console.error('Error playing track:', error);
+        res.status(500).send('Failed to play or pause track.');
+    }
+});
+
+// Endpoint to pause the currently playing song
+app.get('/pause', async (req, res) => {
+    try {
+        if (req.session.isSpotify) {
+            // Pause the currently playing song on Spotify
+            await pauseSong();
+            res.send('Pausing the currently playing song on Spotify.');
+        } else {
+            // Pause the currently playing song on Deezer
+            await pauseSongDeezer();
+            res.send('Pausing the currently playing song on Deezer.');
+        }
+    } catch (error) {
+        console.error('Error pausing track:', error);
+        res.status(500).send('Failed to pause track.');
+    }
+});
+
 
 // Route to fetch top tracks and return album cover URLs
 app.get('/albumCovers', async (req, res) => {
@@ -355,3 +349,9 @@ app.get('/albumCovers', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch top tracks' });
     }
 });
+
+app.listen(9999, '54.38.241.241', () =>
+    console.log(
+        'HTTP Server up. Now go to http://54.38.241.241/login or http://54.38.241.241/deezer in your browser.'
+    )
+);
