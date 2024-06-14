@@ -10,6 +10,9 @@ class PlayerDAO {
             const db = await this.connexionManager.getDbConnection();
             if (await this.findPlayerByName(player.user_name) !== null) {
                 await this.updatePlayer(player);
+                const createdPlayer = await this.findPlayerByName(player.user_name);
+                console.log("Player top 25 :", createdPlayer.top25);
+                return createdPlayer[0];
             } else {
                 const top25String = JSON.stringify(player.top25); // Serialize the array of objects
                 const result = await db.query(this.connexionManager.connection, 'INSERT INTO players(user_name, spotify, top25, token) VALUES(?, ?, ?, ?)', [player.user_name, player.spotify, top25String, player.token]);
