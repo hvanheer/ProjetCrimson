@@ -1,6 +1,6 @@
 const fs = require('fs')
 const SpotifyWebApi = require('spotify-web-api-node');
-const token = fs.readFileSync('token.txt', 'utf8').trim();
+const token = fs.readFileSync('access_token.txt', 'utf8').trim();
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(token);
 

@@ -93,7 +93,7 @@ function connectAPI() {
             })
 
             // Once you get the access token, save it to a file
-            //fs.writeFileSync('token.txt', access_token);
+            //fs.writeFileSync('access_token.txt', access_token);
 
             //getUserData()
             //.then(userData => {
@@ -232,7 +232,7 @@ function connectAPI() {
                 const accessToken = parsedResponse.access_token;
 
                 // Once you get the access token, save it to a file
-                fs.writeFileSync('token.txt', accessToken);
+                fs.writeFileSync('access_token.txt', accessToken);
 
                 if (accessToken) {
                     const top_tracks_url = `https://api.deezer.com/user/me/history?access_token=${accessToken}&limit=25`; // Change limit to 25

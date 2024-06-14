@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="312be513-050f-44c5-a500-c1872298786f" name="Changes" comment="" />
+    <list default="true" id="312be513-050f-44c5-a500-c1872298786f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/src/bridge/access_token.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/bridge/refresh_token.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/node-fetch/LICENSE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/node-fetch/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/lib/index.es.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/lib/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/lib/index.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/node_modules/node-fetch/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/node-fetch/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/api/apiFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/api/apiFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/api/apiLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/api/apiLogin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/api/spotify-player.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/api/spotify-player.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/bridge/spotifyBridge.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/bridge/spotifyBridge.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/bridge/token.txt" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +64,7 @@
     "Node.js.main.js.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "deezerPlayerMergeBranch",
+    "git-widget-placeholder": "tryingToSaveProjectFromAbsoluteFailure",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/guill/Documents/4A/COURSES/ANGULAR/TP",

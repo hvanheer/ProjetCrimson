@@ -1,7 +1,10 @@
 const fs = require('fs')
 const SpotifyWebApi = require("spotify-web-api-node");
-const token = fs.readFileSync('token.txt', 'utf8').trim();
+const fetch = require("node-fetch");
+const access_token = fs.readFileSync('access_token.txt', 'utf8').trim();
+const refresh_token = fs.readFileSync('refresh_token.txt', 'utf8').trim();
 const spotifyApi = new SpotifyWebApi();
+const fetch = require('node-fetch');
 spotifyApi.setAccessToken(token);
 
 window.onSpotifyWebPlaybackSDKReady = () => {
@@ -30,13 +33,71 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.connect();
 };
 
-function playTrack(device_id, track_uri) {
+async function refreshToken(refresh_token) {
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + Buffer.from(`a8fbbf0101ef4d06a632dfea2613e5ec:810f530692d948c39933df1250402545`).toString('base64'),
+        },
+        body: new URLSearchParams({
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to refresh token');
+    }
+
+    const data = await response.json();
+    return data.access_token;
+}
+
+async function playTrack(device_id, track_uri, access_token, refresh_token) {
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ uris: [track_uri] }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            },
+        });
+
+        if (response.status === 401) { // Unauthorized, likely due to an expired token
+            const newToken = await refreshToken(refresh_token);
+            console.log('Access token refreshed:', newToken);
+
+            // Retry the playTrack function with the new token
+            const retryResponse = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ uris: [track_uri] }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${newToken}`
+                },
+            });
+
+            if (!retryResponse.ok) {
+                console.error('Failed to play track after refreshing token:', retryResponse.statusText);
+            }
+        } else if (!response.ok) {
+            console.error('Failed to play track:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error playing track:', error);
+    }
+}
+
+
+/*function playTrack(device_id, track_uri) {
     fetch('https://api.spotify.com/v1/me/player/play?device_id=${device_id}', {
         method: 'PUT',
             body: JSON.stringify({ uris: [track_uri] }),
             headers: {
             'Content-Type': 'application/json',
-                'Authorization': 'Bearer ${token}'
+                'Authorization': 'Bearer ${access_token}'
         },
     }).then(response => {
         if (response.status === 403 || response.status === 404) {
@@ -45,4 +106,4 @@ function playTrack(device_id, track_uri) {
     }).catch(error => {
         console.error('Error playing track:', error);
     });
-}
+}*/
