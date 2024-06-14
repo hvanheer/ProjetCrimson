@@ -78,7 +78,7 @@ app.get('/login', (req, res) => {
     res.redirect(spotifyApi.createAuthorizeURL(scopes));
 });
 
-/*app.get('/callback', async (req, res) => {
+app.get('/callback', async (req, res) => {
     const error = req.query.error;
     const code = req.query.code;
 
@@ -110,7 +110,7 @@ app.get('/login', (req, res) => {
     } catch (error) {
         res.send(`Error getting Tokens: ${error}`);
     }
-});*/
+});
 
 // Middleware to ensure user is authenticated
 const ensureAuthenticated = async (req, res, next) => {
@@ -169,7 +169,7 @@ async function getUserData(access_token) {
     }
 }
 
-/*app.get('/play', async (req, res) => {
+app.get('/play', async (req, res) => {
     //console.log('Session data:', req.session);
     //console.log('User name:', req.session.user);
     if (!req.session.user) {
@@ -202,9 +202,8 @@ async function getUserData(access_token) {
     console.log('User name:', req.session.user);
     res.send(`User name: ${req.session.user}`);
 });
-*/
 
-app.get('/callback', (req, res) => {
+/*app.get('/callback', (req, res) => {
     const error = req.query.error;
     const code = req.query.code;
     const state = req.query.state;
@@ -270,10 +269,10 @@ app.get('/callback', (req, res) => {
             console.error('Error getting Tokens:', error);
             res.send(`Error getting Tokens: ${error}`);
         });
-});
+});*/
 
 // Endpoint to play songs
-app.get('/play', async (req, res) => {
+/*app.get('/play', async (req, res) => {
     try {
         //console.log('isSpotify:', req.session.isSpotify);
         //if (req.session.isSpotify) {
@@ -312,7 +311,7 @@ app.get('/play', async (req, res) => {
         console.error('Error playing track:', error);
         res.status(500).send('Failed to play or pause track.');
     }
-});
+});*/
 
 // Endpoint to pause the currently playing song
 app.get('/pause', async (req, res) => {
