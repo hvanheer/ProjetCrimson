@@ -110,7 +110,7 @@ app.get('/callback', async (req, res) => {
 
         req.session.user = userData.userName;
         console.log("User's name:", userData.userName);
-        console.log("User's TopTracks:", userData.topTracks);
+        console.log("User's TopTracks:", userData.topTracksData);
 
         res.send('Success! You can now close the window.');
     } catch (error) {
@@ -169,16 +169,15 @@ app.get('/play', async (req, res) => {
         const topTracks = JSON.parse(data);
         const randomTrack = topTracks[Math.floor(Math.random() * topTracks.length)];
         const trackId = randomTrack.trackId;
-        console.log('trackId:', trackId);
         const positionMs = (randomTrack.duration_ms) * 0.3;
+        console.log('trackId:', trackId);
+        console.log('positionMs:', positionMs);
         await playSong(trackId, positionMs);
-
         const trackInfo = {
             trackName: randomTrack.name,
             trackArtists: randomTrack.artists,
             trackAlbumCover: randomTrack.album.coverUrl
         };
-
         res.json({ trackInfo });
     } catch (error) {
         console.error('Error getting user data:', error);

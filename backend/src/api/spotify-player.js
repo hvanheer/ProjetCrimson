@@ -54,9 +54,42 @@ async function refreshToken(refresh_token) {
     return data.access_token;
 }
 
+async function getActiveDevice(token) {
+    const response = await fetch('https://api.spotify.com/v1/me/player/devices', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to get devices');
+    }
+
+    const data = await response.json();
+    const devices = data.devices;
+    const activeDevice = devices.find(device => device.is_active);
+
+    if (!activeDevice) {
+        throw new Error('No active device found');
+    }
+
+    return activeDevice.id;
+}
+
+
 async function playTrack(device_id, track_uri, access_token, refresh_token) {
     try {
-        const response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+        let device_id;
+
+        try {
+            device_id = await getActiveDevice(access_token);
+        } catch (error) {
+            console.error('Error getting active device:', error);
+            return;
+        }
+
+        let response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
             method: 'PUT',
             body: JSON.stringify({ uris: [track_uri] }),
             headers: {
