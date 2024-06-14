@@ -95,7 +95,7 @@ app.get('/callback', async (req, res) => {
                 console.log('Token written to file successfully');
             }
         });
-        fs.writeFile('./refresh_token.txt', access_token, (err) => {
+        fs.writeFile('./refresh_token.txt', refresh_token, (err) => {
             if (err) {
                 console.error('Error writing to file:', err);
             } else {
