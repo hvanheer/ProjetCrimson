@@ -88,24 +88,26 @@ app.get('/callback', async (req, res) => {
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
 
-        fs.writeFile('./access_token.txt', access_token, (err) => {
-            if (err) {
-                console.error('Error writing to file:', err);
-            } else {
-                console.log('Token written to file successfully');
-            }
-        });
-        fs.writeFile('./refresh_token.txt', refresh_token, (err) => {
-            if (err) {
-                console.error('Error writing to file:', err);
-            } else {
-                console.log('Token written to file successfully');
-            }
-        });
-
         const userData = await getUserData();
         if (!userData) {
             throw new Error("Failed to retrieve user data");
+        }
+
+        if (userData.userName === 'augustindenis') {
+            fs.writeFile('./access_token.txt', access_token, (err) => {
+                if (err) {
+                    console.error('Error writing to file:', err);
+                } else {
+                    console.log('Token written to file successfully');
+                }
+            });
+            fs.writeFile('./refresh_token.txt', refresh_token, (err) => {
+                if (err) {
+                    console.error('Error writing to file:', err);
+                } else {
+                    console.log('Token written to file successfully');
+                }
+            });
         }
 
         req.session.user = userData.userName;
