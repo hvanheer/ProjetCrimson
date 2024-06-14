@@ -155,8 +155,7 @@ async function getUserData() {
         const meData = await spotifyApi.getMe();
         const topTracksData = getMyTopTracks();
         const userName = meData.body.display_name;
-        const topTracks = topTracksData.body.items.map(track => track.name);
-        return { userName, topTracks };
+        return { userName, topTracksData };
     } catch (error) {
         console.error('Error retrieving user data:', error);
         return null;
