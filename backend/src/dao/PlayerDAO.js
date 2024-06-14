@@ -14,6 +14,7 @@ class PlayerDAO {
                 console.log("Player top 25 :", createdPlayer.top25);
                 return createdPlayer[0];
             } else {
+                console.log("Player top 25 :", player.top25);
                 const top25String = JSON.stringify(player.top25); // Serialize the array of objects
                 const result = await db.query(this.connexionManager.connection, 'INSERT INTO players(user_name, spotify, top25, token) VALUES(?, ?, ?, ?)', [player.user_name, player.spotify, top25String, player.token]);
                 const playerId = result.insertId;
