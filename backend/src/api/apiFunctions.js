@@ -50,13 +50,13 @@ async function getMyTopTracks() {
         // Write the tracks data to a JSON file
         fs.writeFileSync('top_tracks.json', JSON.stringify(tracksData, null, 2))
 
-        console.log("Your top 25 tracks of all time:");
+        /*console.log("Your top 25 tracks of all time:");
         let songList = [];
         topTracks.body.items.forEach((track, index) => {
             console.log(`${index + 1}. ${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`);
             let song = `${index + 1}. ${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`;
             songList.push(song);
-        });
+        });*/
 
         return tracksData;
     } catch (error) {
