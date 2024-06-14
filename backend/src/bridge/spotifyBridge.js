@@ -154,7 +154,7 @@ async function getUserData() {
 }
 
 // Example route that requires a valid access token
-app.get('/play', ensureAuthenticated, async (req, res) => {
+app.get('/play', async (req, res) => {
     try {
         const data = await readFileAsync('top_tracks.json');
         const topTracks = JSON.parse(data);
