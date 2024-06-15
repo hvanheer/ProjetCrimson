@@ -45,7 +45,7 @@ struct Results: View {
                         .frame(width: 325)
                     }
                     
-                    NavigationLink(destination: MusicPlayerView()) {
+                    NavigationLink(destination: MusicPlayerView() .navigationBarBackButtonHidden(true)) {
                         Text("Suivant")
                             .foregroundColor(.white)
                             .padding()
@@ -53,23 +53,26 @@ struct Results: View {
                             .cornerRadius(8)
                     }
                 }
+                .navigationBarBackButtonHidden(true)
             }
+            .navigationBarBackButtonHidden(true)
         }
         .onAppear(perform: fetchPlayers)
+        .navigationBarBackButtonHidden(true)
     }
     
     // Simulated function to fetch players data
     func fetchPlayers() {
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
             let jsonData = """
             [
-                {"name": "Player1", "score": 10},
-                {"name": "Player2", "score": 20},
-                {"name": "Player3", "score": 15},
-                {"name": "Player4", "score": 25},
-                {"name": "Player5", "score": 30},
-                {"name": "Player6", "score": 5},
-                {"name": "Player7", "score": 17}
+                {"name": "Hugo", "score": 0},
+                {"name": "Élea", "score": 10},
+                {"name": "Maxence", "score": 10},
+                {"name": "Amelie", "score": 0},
+                {"name": "Maxence", "score": 0},
+                {"name": "Augustin", "score": 20},
+                {"name": "Guillaume", "score": 10}
             ]
             """.data(using: .utf8)!
             

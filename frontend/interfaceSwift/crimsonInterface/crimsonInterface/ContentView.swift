@@ -48,7 +48,7 @@ struct ContentView: View {
                             // Changer l'état pour naviguer vers la vue Menu
                             navigateToMenu = true
                         }
-                    }) {
+                    } ) {
                         HStack {
                             Image("spotifylogo")
                                 .resizable()
@@ -75,15 +75,6 @@ struct ContentView: View {
                         .padding()
                         .background(Color.purple)
                         .cornerRadius(8)
-                    }
-                    .padding()
-                    
-                    NavigationLink(destination: MusicPlayerView()) {
-                        Text("Go to Music Player")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(8)
                     }
                     .padding()
                     NavigationLink(destination: Menu(), isActive: $navigateToMenu) {

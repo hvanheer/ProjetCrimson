@@ -28,7 +28,7 @@ struct JoinGameRoomView: View {
                         .cornerRadius(8)
                         .padding()
                         .foregroundColor(.black)
-                    NavigationLink(destination: GameRoomPlayer()) {
+                    NavigationLink(destination: GameRoomPlayer() .navigationBarBackButtonHidden(true)) {
                         Text("Go")
                             .foregroundColor(.white)
                             .padding()

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameRoomMaster: View {
-    @State private var joinCode: String = "123456"
+    @State private var joinCode: String = "8752"
     @State private var players: [Player] = []
 
     var body: some View {
@@ -45,7 +45,7 @@ struct GameRoomMaster: View {
                         
                     }
                 
-                    NavigationLink(destination: MusicPlayerView()) {
+                    NavigationLink(destination: MusicPlayerView() .navigationBarBackButtonHidden(true)) {
                         Text("Start Game")
                             .foregroundColor(.white)
                             .padding()
@@ -60,16 +60,10 @@ struct GameRoomMaster: View {
     
     // Simulated function to fetch players data
     func fetchPlayers() {
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             let jsonData = """
             [
-                {"name": "Player1"},
-                {"name": "Player2"},
-                {"name": "Player3"},
-                {"name": "Player4"},
-                {"name": "Player5"},
-                {"name": "Player6"},
-                {"name": "Player7"},
+                {"name": "Augustin", "score": 20}
             ]
             """.data(using: .utf8)!
             

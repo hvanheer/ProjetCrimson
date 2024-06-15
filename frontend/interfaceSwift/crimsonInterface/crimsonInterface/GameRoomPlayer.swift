@@ -21,7 +21,7 @@ struct Player: Identifiable, Codable {
 }
 
 struct GameRoomPlayer: View {
-    @State private var joinCode: String = "123456"
+    @State private var joinCode: String = "1823"
     @State private var players: [Player] = []
 
     var body: some View {
@@ -65,16 +65,16 @@ struct GameRoomPlayer: View {
     
     // Simulated function to fetch players data
     func fetchPlayers() {
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             let jsonData = """
             [
-                {"name": "Player1"},
-                {"name": "Player2"},
-                {"name": "Player3"},
-                {"name": "Player4"},
-                {"name": "Player5"},
-                {"name": "Player6"},
-                {"name": "Player7"},
+                {"name": "Hugo", "score": 0},
+                {"name": "Élea", "score": 10},
+                {"name": "Maxence", "score": 10},
+                {"name": "Amelie", "score": 0},
+                {"name": "Maxence", "score": 0},
+                {"name": "Guillaume", "score": 20},
+                {"name": "Augustin", "score": 10}
             ]
             """.data(using: .utf8)!
             

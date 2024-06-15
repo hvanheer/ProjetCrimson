@@ -1,19 +1,14 @@
-//
-//  MusicPlayerView.swift
-//  crimsonInterface
-//
-//  Created by Augustin DENIS on 03/04/2024.
-//
 import SwiftUI
 import Foundation
 
 struct MusicPlayerView: View {
     @State private var isPlaying = false // État de lecture
-    @State private var playbackProgress: Double = 0.5 // Progression de la lecture
+    @State private var playbackProgress: Double = 0 // Progression de la lecture
     @State private var trackName: String = "Loading..." // Nom de la piste musicale
     @State private var artistName: String = "Loading..." // Nom de l'artiste
     @State private var albumArtworkURL: URL? // URL de la pochette de l'album
-    
+    @State private var navigateToVote: Bool = false // État pour navigation
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -60,16 +55,13 @@ struct MusicPlayerView: View {
                     
                     // Barre de progression Apple Music style
                     AppleMusicProgressBar(value: $playbackProgress)
+                    
                     // Bouton de lecture/pause
                     Button(action: {
                         if isPlaying {
-                            crimsonInterfaceApp.pauseMusic()// Mettre en pause la musique
+                            pauseMusic()
                         } else {
-                            crimsonInterfaceApp.playMusic { track, artist, albumArtworkURL in
-                                self.trackName = track
-                                self.artistName = artist
-                                self.albumArtworkURL = albumArtworkURL
-                            }
+                            playMusic()
                         }
                         self.isPlaying.toggle() // Inverse l'état de lecture
                     }) {
@@ -79,11 +71,45 @@ struct MusicPlayerView: View {
                             .frame(width: 64, height: 64)
                             .foregroundColor(.white)
                     }
+                    
+                    NavigationLink(destination: Vote().navigationBarBackButtonHidden(true), isActive: $navigateToVote) {
+                        EmptyView()
+                    }
                 }
                 .padding()
             }
             .navigationBarHidden(true) // Masquer la barre de navigation
+            .onAppear {
+                startTimer()
+            }
         }
+    }
+    
+    func startTimer() {
+        Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) { _ in
+            pauseMusic()
+            navigateToVote = true
+        }
+    }
+
+    func playMusic() {
+        crimsonInterfaceApp.playMusic { track, artist, albumArtworkURL in
+            self.trackName = track
+            self.artistName = artist
+            self.albumArtworkURL = albumArtworkURL
+        }
+        // Démarrer la progression fictive de la musique
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+            if self.playbackProgress < 1.0 && self.isPlaying {
+                self.playbackProgress += 0.005
+            } else {
+                timer.invalidate()
+            }
+        }
+    }
+
+    func pauseMusic() {
+        crimsonInterfaceApp.pauseMusic()
     }
     
     // Barre de progression Apple Music style
@@ -119,7 +145,4 @@ struct MusicPlayerView: View {
             MusicPlayerView()
         }
     }
-}
-#Preview {
-    JoinGameRoomView()
 }

@@ -14,35 +14,36 @@ struct Menu: View {
                 LinearGradient(gradient: Gradient(colors: [Color(hex: 0x660033), Color(hex: 0x0066CC)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
                     .overlay(
-                                        VStack {
-                                            Text("Menu")
-                                                .font(.custom("Phosphate", size: 35))
-                                                .foregroundColor(.white)
-                                                .frame(maxHeight: .infinity, alignment: .topLeading)
-                                                .padding(.top)
-                                            Spacer()
-                                        },
-                                        alignment: .top
-                                    )
+                        VStack {
+                            Text("Menu")
+                                .font(.custom("Phosphate", size: 35))
+                                .foregroundColor(.white)
+                                .frame(maxHeight: .infinity, alignment: .topLeading)
+                                .padding(.top)
+                            Spacer()
+                        },
+                        alignment: .top
+                    )
                 VStack {
-                        NavigationLink(destination: JoinGameRoomView()) {
-                            Text("Rejoindre")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.blue)
-                                .cornerRadius(8)
-                        }
-                        .padding()
-                        NavigationLink(destination: GameRoomMaster()) {
-                            Text("Creer une room")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.blue)
-                                .cornerRadius(8)
-                        }
+                    NavigationLink(destination: JoinGameRoomView() .navigationBarBackButtonHidden(true) ) {
+                        Text("Rejoindre")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                    .padding()
+                    NavigationLink(destination: GameRoomMaster() .navigationBarBackButtonHidden(true)) {
+                        Text("Creer une room")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
